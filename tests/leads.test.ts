@@ -23,12 +23,19 @@ function validPayload(overrides: Record<string, unknown> = {}) {
 
   for (const field of site.form.fields) {
     if (!field.required) continue;
+    // Every field type whose schema is more than a length check needs its own
+    // fixture value, or making that type required turns this suite red for a
+    // reason that has nothing to do with the pipeline.
     base[field.name] =
       field.type === 'email'
         ? 'alex@example.com'
-        : field.type === 'checkbox'
-          ? true
-          : 'x'.repeat(Math.max(field.min ?? 2, 2));
+        : field.type === 'tel'
+          ? '0102030405'
+          : field.type === 'select'
+            ? (field.options?.[0] ?? '')
+            : field.type === 'checkbox'
+              ? true
+              : 'x'.repeat(Math.max(field.min ?? 2, 2));
   }
 
   return { ...base, ...overrides };

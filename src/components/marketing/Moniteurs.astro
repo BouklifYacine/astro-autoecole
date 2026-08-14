@@ -1,0 +1,66 @@
+---
+import { autoecole } from '@/lib/autoecole';
+import SectionHeading from './SectionHeading.astro';
+import MediaSlot from './MediaSlot.astro';
+
+const { moniteurs, lieux } = autoecole;
+---
+
+<section id="equipe" class="section-space bg-canvas scroll-mt-20">
+  <div class="container-shell">
+    <SectionHeading
+      eyebrow="L’équipe et les secteurs"
+      title="Tu sais qui sera à côté de toi, et où tu le retrouves."
+      lead="Chaque moniteur couvre un secteur. Tu gardes le même du premier au dernier cours, sauf si tu demandes à en changer."
+    />
+
+    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        moniteurs.map((moniteur) => (
+          <li>
+            <MediaSlot media={moniteur.media} />
+            <p class="mt-4 font-heading text-lg font-semibold text-ink">{moniteur.prenom}</p>
+            <p class="text-sm text-brand">{moniteur.specialite}</p>
+            <p class="mt-2 text-sm text-muted-foreground">{moniteur.bio}</p>
+            <p class="mt-3 flex items-start gap-1.5 text-sm text-ink">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                fill="none"
+                class="mt-0.5 size-4 shrink-0 text-muted-foreground"
+              >
+                <path
+                  d="M8 14.5s5-4.03 5-7.5a5 5 0 0 0-10 0c0 3.47 5 7.5 5 7.5Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"
+                />
+                <circle cx="8" cy="7" r="1.75" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+              {moniteur.secteur}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="surface-card mt-10 p-6 sm:p-8">
+      <h3 class="font-heading text-lg font-semibold text-ink">Points de rendez-vous</h3>
+      <p class="mt-1.5 text-sm text-muted-foreground">
+        Ta leçon démarre ici, pas à l’agence. Tu choisis ton point à l’inscription et tu peux en
+        changer d’une leçon à l’autre.
+      </p>
+
+      <ul class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          lieux.map((lieu) => (
+            <li class="flex items-baseline gap-3 border-t border-(--color-border) pt-3">
+              <span class="text-[0.95rem] text-ink">{lieu.name}</span>
+              <span class="ml-auto shrink-0 text-xs text-muted-foreground">{lieu.note}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

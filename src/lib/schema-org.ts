@@ -85,6 +85,47 @@ export function articleSchema(input: {
   };
 }
 
+/**
+ * The local business graph for the landing page.
+ *
+ * `["LocalBusiness", "EducationalOrganization"]` rather than a driving-school
+ * specific type: schema.org has no `DrivingSchool`, and inventing a type gets the
+ * whole block ignored. Multiple types on one node is valid and is how a school
+ * that is also a shopfront gets described.
+ *
+ * No `Offer` / `priceRange` is emitted. The prices on this page are demo values,
+ * and structured data is exactly the wrong place for a number that is not real.
+ */
+export function localBusinessSchema(input: {
+  /** Already in schema.org format ("Mo-Fr 09:00-12:00"), never derived from labels. */
+  openingHours?: string[];
+  areaServed?: string[];
+}): SchemaGraph {
+  const address = compact({
+    '@type': 'PostalAddress',
+    streetAddress: site.contact.address.street,
+    postalCode: site.contact.address.postalCode,
+    addressLocality: site.contact.address.city,
+    addressCountry: site.contact.address.country,
+  });
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['LocalBusiness', 'EducationalOrganization'],
+    ...compact({
+      name: site.name,
+      url: origin,
+      logo: site.brand.logo ? absoluteUrl(site.brand.logo) : '',
+      email: site.contact.email,
+      telephone: site.contact.phone,
+      address,
+      sameAs: site.sameAs,
+      areaServed: [...new Set(input.areaServed ?? [])],
+      openingHours: input.openingHours ?? [],
+    }),
+  };
+}
+
 export function breadcrumbSchema(items: { name: string; path: string }[]): SchemaGraph {
   return {
     '@context': 'https://schema.org',

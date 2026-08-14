@@ -1,0 +1,50 @@
+---
+/**
+ * The marketing call to action.
+ *
+ * Not `buttonVariants` from src/components/ui/button.tsx: those are sized for
+ * product density (h-8 / h-9, i.e. 32–36px). A landing page CTA that people tap
+ * on a phone needs 48px, and this one is repeated on six sections.
+ *
+ * Blue is reserved for actions. `primary` is the only variant that gets it.
+ */
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'secondary' | 'onDark';
+  /** Renders a right chevron. Off by default — an arrow on every button is noise. */
+  arrow?: boolean;
+  class?: string;
+}
+
+const { href, label, variant = 'primary', arrow = false, class: className = '' } = Astro.props;
+
+const base =
+  'inline-flex min-h-12 items-center justify-center gap-2 rounded-(--radius-base) px-6 text-base font-medium no-underline transition-colors duration-150';
+
+const variants = {
+  primary: 'bg-brand text-brand-contrast hover:bg-brand-hover',
+  secondary: 'bg-surface text-ink border border-(--color-border) hover:bg-brand-tint hover:border-brand',
+  onDark: 'border border-white/30 text-white hover:bg-white/10',
+} as const;
+---
+
+<a href={href} class:list={[base, variants[variant], className]}>
+  {label}
+  {
+    arrow && (
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-4 shrink-0"
+      >
+        <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" />
+      </svg>
+    )
+  }
+</a>

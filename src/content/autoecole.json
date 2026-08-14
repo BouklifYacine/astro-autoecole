@@ -1,0 +1,357 @@
+{
+  "_demo": "CONTENU DE DÉMONSTRATION. Auto-école fictive. Tout ce fichier est à remplacer pour un vrai client. Les valeurs marquées \"aConfirmer\" ne sont volontairement PAS inventées : elles engagent juridiquement.",
+
+  "aConfirmer": {
+    "tauxReussite": "[TAUX DE RÉUSSITE — à renseigner depuis les données officielles publiées par le ministère de l'Intérieur sur data.gouv.fr]",
+    "agrement": "[N° D'AGRÉMENT PRÉFECTORAL]",
+    "qualiopi": "[CERTIFICATION QUALIOPI — à confirmer avant toute mention du financement CPF]"
+  },
+
+  "hero": {
+    "eyebrow": "Auto-école à Angers",
+    "title": "Ton permis à Angers, avec le même moniteur du début à la fin.",
+    "lead": "Permis B manuelle ou automatique, conduite accompagnée et code. Cinq points de rendez-vous sur l'agglomération, des tarifs affichés en clair, et un livret de progression que tu peux relire après chaque leçon.",
+    "media": {
+      "ratio": "4 / 5",
+      "alt": "Une élève au volant pendant une leçon, son moniteur assis à droite, en conduite urbaine à Angers.",
+      "brief": "Photo réelle, prise depuis la banquette arrière. Élève au volant au premier plan, moniteur de profil à droite. Lumière naturelle de fin de journée, pas de flash. On doit voir deux personnes qui travaillent ensemble, pas une voiture."
+    }
+  },
+
+  "trust": [
+    {
+      "title": "Cinq points de rendez-vous",
+      "detail": "Angers centre, Saint-Laud, Avrillé, Trélazé et Les Ponts-de-Cé."
+    },
+    {
+      "title": "Moniteurs diplômés d'État",
+      "detail": "Tous titulaires du titre professionnel ECSR."
+    },
+    {
+      "title": "Manuelle et automatique",
+      "detail": "Les deux boîtes disponibles, sans surcoût de dossier."
+    },
+    {
+      "title": "Un moniteur référent",
+      "detail": "Le même interlocuteur de l'évaluation à l'examen."
+    }
+  ],
+
+  "formations": [
+    {
+      "slug": "permis-b-manuelle",
+      "formValue": "Permis B — boîte manuelle",
+      "name": "Permis B — boîte manuelle",
+      "public": "Dès 17 ans",
+      "benefit": "La formation complète : une fois le permis en poche, tu conduis n'importe quelle voiture.",
+      "volume": "20 h de conduite minimum (volume légal)",
+      "priceFrom": 1190,
+      "featured": true
+    },
+    {
+      "slug": "permis-b-automatique",
+      "formValue": "Permis B — boîte automatique",
+      "name": "Permis B — boîte automatique",
+      "public": "Dès 17 ans",
+      "benefit": "Moins d'heures, moins de charge mentale au volant. Passage à la manuelle possible ensuite en 7 h.",
+      "volume": "13 h de conduite minimum (volume légal)",
+      "priceFrom": 990,
+      "featured": false
+    },
+    {
+      "slug": "conduite-accompagnee",
+      "formValue": "Conduite accompagnée (AAC)",
+      "name": "Conduite accompagnée",
+      "public": "Dès 15 ans, avec un accompagnateur",
+      "benefit": "Un an de pratique réelle avant l'examen, et une assurance moins chère les premières années.",
+      "volume": "20 h puis 3 000 km sur 1 an minimum",
+      "priceFrom": 1290,
+      "featured": false
+    },
+    {
+      "slug": "conduite-supervisee",
+      "formValue": "Conduite supervisée",
+      "name": "Conduite supervisée",
+      "public": "Dès 18 ans, ou après un échec",
+      "benefit": "Reprendre du kilométrage avec un proche entre deux passages, sans repayer une formation entière.",
+      "volume": "2 h de rendez-vous préalable",
+      "priceFrom": 380,
+      "featured": false
+    },
+    {
+      "slug": "code",
+      "formValue": "Code de la route",
+      "name": "Code de la route",
+      "public": "Dès 15 ans",
+      "benefit": "Salle et plateforme en ligne en accès illimité, avec une séance encadrée par semaine.",
+      "volume": "Accès 12 mois",
+      "priceFrom": 350,
+      "featured": false
+    }
+  ],
+
+  "etapes": [
+    {
+      "title": "Choisis ta formation",
+      "description": "Boîte manuelle ou automatique, code seul ou formule complète. Si tu hésites, un appel de cinq minutes suffit à trancher."
+    },
+    {
+      "title": "Trouve un point de rendez-vous",
+      "description": "Cinq points sur l'agglomération. Ton moniteur t'y retrouve : tu ne perds pas une demi-heure de leçon en trajet."
+    },
+    {
+      "title": "Réserve ton créneau",
+      "description": "Tu indiques tes jours et tes tranches horaires. On te rappelle sous 24 h ouvrées avec les créneaux réellement libres."
+    },
+    {
+      "title": "Suis ta progression",
+      "description": "Après chaque leçon, ton moniteur remplit ton livret. Tu sais où tu en es sur les quatre compétences évaluées à l'examen."
+    }
+  ],
+
+  "methode": {
+    "intro": "Pas de formule magique : une évaluation honnête au départ, des objectifs annoncés à chaque heure, et un point écrit après chaque leçon.",
+    "items": [
+      {
+        "title": "Évaluation de départ",
+        "description": "Une heure avant toute inscription, pour estimer ton volume réel. Si l'estimation dépasse le forfait, on te le dit avant que tu paies."
+      },
+      {
+        "title": "Un objectif par leçon",
+        "description": "Chaque heure commence par ce qu'on va travailler et finit par un point dessus. Pas de leçon « on verra bien »."
+      },
+      {
+        "title": "Les quatre compétences du REMC",
+        "description": "Ta progression suit le référentiel officiel : maîtriser le véhicule, appréhender la route, circuler avec les autres, pratiquer en autonomie."
+      },
+      {
+        "title": "Débrief systématique",
+        "description": "Dix minutes en fin de leçon : ce qui a marché, ce qui reste à travailler, ce qu'on fait la prochaine fois."
+      },
+      {
+        "title": "Deux examens blancs",
+        "description": "Dans les conditions réelles, avec un moniteur qui n'est pas le tien, avant que la date d'examen soit posée."
+      },
+      {
+        "title": "Accompagnement le jour J",
+        "description": "Ton moniteur t'emmène sur le lieu d'examen et te récupère à la sortie."
+      }
+    ]
+  },
+
+  "moniteurs": [
+    {
+      "prenom": "Karim",
+      "specialite": "Permis B et conduite accompagnée",
+      "secteur": "Angers centre et Saint-Léonard",
+      "bio": "Douze ans d'enseignement. Réputé patient avec les élèves que la conduite en ville angoisse.",
+      "media": {
+        "ratio": "1 / 1",
+        "alt": "Portrait de Karim, moniteur.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+      }
+    },
+    {
+      "prenom": "Sophie",
+      "specialite": "Boîte automatique et reprise de conduite",
+      "secteur": "Avrillé et Beaucouzé",
+      "bio": "Accompagne surtout les adultes qui reprennent le volant après plusieurs années d'arrêt.",
+      "media": {
+        "ratio": "1 / 1",
+        "alt": "Portrait de Sophie, monitrice.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+      }
+    },
+    {
+      "prenom": "Mehdi",
+      "specialite": "Conduite accompagnée et code",
+      "secteur": "Trélazé et Les Ponts-de-Cé",
+      "bio": "Anime les séances de code du samedi matin et les rendez-vous pédagogiques avec les parents.",
+      "media": {
+        "ratio": "1 / 1",
+        "alt": "Portrait de Mehdi, moniteur.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+      }
+    },
+    {
+      "prenom": "Claire",
+      "specialite": "Permis B et préparation à l'examen",
+      "secteur": "La Doutre et Lac de Maine",
+      "bio": "S'occupe des examens blancs. C'est elle que tu auras en face le jour de la répétition générale.",
+      "media": {
+        "ratio": "1 / 1",
+        "alt": "Portrait de Claire, monitrice.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+      }
+    }
+  ],
+
+  "lieux": [
+    { "name": "Angers — Agence, 18 rue Saint-Léonard", "note": "Inscriptions et séances de code" },
+    { "name": "Angers — Gare Saint-Laud", "note": "Départ pratique" },
+    { "name": "Angers — Lac de Maine", "note": "Départ pratique" },
+    { "name": "Avrillé — Centre commercial Atoll", "note": "Départ pratique" },
+    { "name": "Trélazé — Place Olivier Thuau", "note": "Départ pratique" },
+    { "name": "Les Ponts-de-Cé — Mairie", "note": "Départ pratique" }
+  ],
+
+  "tarifs": {
+    "intro": "Les prix ci-dessous sont ceux que tu paies. Les frais de dossier et la présentation à l'examen sont compris dans chaque formule.",
+    "formules": [
+      {
+        "name": "Code seul",
+        "price": 350,
+        "unit": "TTC",
+        "pitch": "Pour passer le code d'abord et décider de la conduite ensuite.",
+        "includes": [
+          "Accès salle et plateforme en ligne, 12 mois",
+          "Une séance encadrée par semaine",
+          "Un examen blanc par semaine",
+          "Frais de dossier et présentation à l'examen du code"
+        ],
+        "excludes": ["Heures de conduite"],
+        "featured": false
+      },
+      {
+        "name": "Permis B — boîte manuelle",
+        "price": 1190,
+        "unit": "TTC",
+        "pitch": "La formule la plus choisie. Code et conduite dans le même forfait.",
+        "includes": [
+          "Code inclus, accès 12 mois",
+          "Évaluation de départ (1 h)",
+          "20 h de conduite",
+          "Deux examens blancs",
+          "Frais de dossier et présentation aux deux examens",
+          "Accompagnement le jour de l'examen"
+        ],
+        "excludes": ["Heures au-delà des 20 h, facturées à l'unité"],
+        "featured": true
+      },
+      {
+        "name": "Permis B — boîte automatique",
+        "price": 990,
+        "unit": "TTC",
+        "pitch": "Moins d'heures obligatoires, donc un budget plus bas au départ.",
+        "includes": [
+          "Code inclus, accès 12 mois",
+          "Évaluation de départ (1 h)",
+          "13 h de conduite",
+          "Deux examens blancs",
+          "Frais de dossier et présentation aux deux examens",
+          "Accompagnement le jour de l'examen"
+        ],
+        "excludes": ["Passerelle vers la boîte manuelle (7 h), facturée à part"],
+        "featured": false
+      },
+      {
+        "name": "Conduite accompagnée",
+        "price": 1290,
+        "unit": "TTC",
+        "pitch": "Dès 15 ans. Un an de route avant l'examen.",
+        "includes": [
+          "Code inclus, accès 12 mois",
+          "20 h de conduite",
+          "Deux rendez-vous pédagogiques avec l'accompagnateur",
+          "Frais de dossier et présentation aux deux examens"
+        ],
+        "excludes": ["Assurance du véhicule de l'accompagnateur"],
+        "featured": false
+      }
+    ],
+    "options": [
+      { "label": "Heure de conduite supplémentaire", "price": 52 },
+      { "label": "Conduite supervisée (2 h de rendez-vous préalable)", "price": 380 },
+      { "label": "Passerelle automatique → manuelle (7 h)", "price": 390 },
+      { "label": "Nouvelle présentation à l'examen pratique", "price": 90 }
+    ],
+    "conditions": [
+      "Prix TTC, valables 12 mois à compter de l'inscription.",
+      "Les volumes indiqués sont les minimums légaux, pas une promesse de réussite à ce volume.",
+      "Toute leçon annulée moins de 48 h à l'avance est due, sauf justificatif."
+    ]
+  },
+
+  "avis": {
+    "note": "Avis de démonstration. À remplacer par des avis réels et autorisés avant toute mise en ligne commerciale.",
+    "items": [
+      {
+        "prenom": "Léa M.",
+        "formation": "Permis B — boîte automatique",
+        "date": "mars 2026",
+        "comment": "J'avais arrêté après un échec dans une autre auto-école. Sophie a repris depuis le début sans me faire sentir que je repartais de zéro. Obtenu au deuxième passage."
+      },
+      {
+        "prenom": "Nassim B.",
+        "formation": "Conduite accompagnée",
+        "date": "février 2026",
+        "comment": "Trois ans entre l'inscription et le permis, et jamais eu à courir après quelqu'un pour avoir une date. Les rendez-vous avec mon père ont vraiment servi."
+      },
+      {
+        "prenom": "Camille R.",
+        "formation": "Permis B — boîte manuelle",
+        "date": "janvier 2026",
+        "comment": "Le point de rendez-vous à la gare m'évitait de traverser Angers avant chaque leçon. Ça paraît anecdotique, ça m'a fait gagner une heure par semaine."
+      },
+      {
+        "prenom": "Théo D.",
+        "formation": "Code de la route",
+        "date": "décembre 2025",
+        "comment": "Séances de code le samedi matin, ce qui collait avec le lycée. Le moniteur reprenait les questions ratées une par une au lieu de passer à la suite."
+      }
+    ]
+  },
+
+  "faq": [
+    {
+      "question": "Combien coûte le permis chez vous ?",
+      "answer": "1 190 € en boîte manuelle et 990 € en boîte automatique, code et présentation aux examens compris. Ces montants correspondent aux volumes légaux minimums. L'évaluation de départ sert justement à te dire, avant que tu paies, si ton volume réel sera probablement plus élevé."
+    },
+    {
+      "question": "Proposez-vous la boîte automatique ?",
+      "answer": "Oui, sur l'ensemble des formations et sans surcoût de dossier. Le volume légal est de 13 h au lieu de 20 h. Si tu veux ensuite conduire une manuelle, la passerelle de 7 h se fait chez nous après l'obtention du permis."
+    },
+    {
+      "question": "Où se déroulent les leçons ?",
+      "answer": "Les inscriptions et le code se font à l'agence, 18 rue Saint-Léonard à Angers. Les leçons de conduite démarrent depuis six points de rendez-vous : agence, gare Saint-Laud, Lac de Maine, Avrillé, Trélazé et Les Ponts-de-Cé. Tu choisis le tien à l'inscription et tu peux en changer."
+    },
+    {
+      "question": "Comment réserver une heure de conduite ?",
+      "answer": "Tu indiques ta formation, ton point de rendez-vous et tes disponibilités depuis cette page. On te rappelle sous 24 h ouvrées avec les créneaux réellement libres chez ton moniteur. La réservation n'est confirmée qu'à ce moment-là, pas au moment où tu envoies le formulaire."
+    },
+    {
+      "question": "Puis-je commencer la conduite avant d'avoir le code ?",
+      "answer": "Oui. Rien n'oblige à obtenir le code avant de monter en voiture, et beaucoup d'élèves mènent les deux en parallèle. Le code reste obligatoire avant de se présenter à l'examen pratique."
+    },
+    {
+      "question": "Comment je suis ma progression ?",
+      "answer": "Par le livret d'apprentissage, rempli par ton moniteur à la fin de chaque leçon. Il suit les quatre compétences du référentiel officiel (REMC). Tu peux le consulter quand tu veux et demander un point d'étape."
+    },
+    {
+      "question": "Quels délais faut-il prévoir ?",
+      "answer": "Le délai qui compte n'est pas le nôtre mais celui d'attribution des places d'examen par la préfecture, et il varie selon les périodes. On te donne l'estimation à jour à l'inscription plutôt qu'une durée moyenne qui ne voudrait rien dire."
+    },
+    {
+      "question": "Que se passe-t-il si j'annule une leçon ?",
+      "answer": "Une annulation à plus de 48 h est reportée sans frais. En dessous de 48 h, la leçon est due, sauf justificatif médical ou scolaire. C'est la seule façon de garantir que les créneaux libérés profitent à quelqu'un d'autre."
+    },
+    {
+      "question": "Proposez-vous la conduite accompagnée ?",
+      "answer": "Oui, dès 15 ans. La formation comprend 20 h de conduite puis au minimum un an et 3 000 km avec ton accompagnateur, ponctués de deux rendez-vous pédagogiques auxquels il participe."
+    },
+    {
+      "question": "Comment se passe l'inscription ?",
+      "answer": "Un rendez-vous à l'agence avec une pièce d'identité, un justificatif de domicile de moins de 3 mois, une photo agréée et l'ASSR2 si tu as moins de 21 ans. On crée ton dossier ANTS sur place. L'évaluation de départ peut se faire dans la foulée."
+    }
+  ],
+
+  "horaires": [
+    {
+      "jours": "Lundi – vendredi",
+      "heures": "9 h – 12 h et 14 h – 19 h",
+      "schemaOrg": ["Mo-Fr 09:00-12:00", "Mo-Fr 14:00-19:00"]
+    },
+    { "jours": "Samedi", "heures": "9 h – 13 h", "schemaOrg": ["Sa 09:00-13:00"] },
+    { "jours": "Dimanche", "heures": "Fermé", "schemaOrg": [] }
+  ]
+}

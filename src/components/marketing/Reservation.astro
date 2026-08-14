@@ -1,0 +1,111 @@
+---
+import { site } from '@/config/site.config';
+import { autoecole } from '@/lib/autoecole';
+import BookingWizard from './BookingWizard';
+import SectionHeading from './SectionHeading.astro';
+import Cta from './Cta.astro';
+
+const { formations, lieux } = autoecole;
+
+/**
+ * If a real booking tool is ever connected, `site.contact.bookingUrl` takes over
+ * and the in-page flow steps aside. Two competing paths to the same action is
+ * worse than either one alone.
+ */
+const externalBooking = site.contact.bookingUrl;
+---
+
+<section id="reservation" class="bg-brand-tint scroll-mt-20">
+  <div class="container-shell section-space">
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
+      <div class="lg:col-span-5">
+        <SectionHeading
+          eyebrow="Réservation"
+          title="Dis-nous ce que tu cherches. On te rappelle avec des créneaux réels."
+          lead="Quatre questions, moins de deux minutes. Aucune donnée bancaire, aucun engagement."
+          class="mb-0"
+        />
+
+        <ul class="mt-8 space-y-4">
+          <li class="flex items-start gap-3">
+            <span aria-hidden="true" class="mt-0.5 text-success">
+              <svg viewBox="0 0 16 16" fill="none" class="size-5">
+                <path
+                  d="m3.5 8.5 3 3 6-7"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <p class="text-[0.95rem] text-ink">
+              <strong class="font-medium">Pas de faux planning.</strong> On ne t’affiche pas de
+              créneaux ici, parce que seul le planning réel de ton moniteur fait foi.
+            </p>
+          </li>
+          <li class="flex items-start gap-3">
+            <span aria-hidden="true" class="mt-0.5 text-success">
+              <svg viewBox="0 0 16 16" fill="none" class="size-5">
+                <path
+                  d="m3.5 8.5 3 3 6-7"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <p class="text-[0.95rem] text-ink">
+              <strong class="font-medium">Rappel sous 24 h ouvrées.</strong> Par un moniteur du
+              secteur que tu as choisi, pas par un centre d’appel.
+            </p>
+          </li>
+          <li class="flex items-start gap-3">
+            <span aria-hidden="true" class="mt-0.5 text-success">
+              <svg viewBox="0 0 16 16" fill="none" class="size-5">
+                <path
+                  d="m3.5 8.5 3 3 6-7"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <p class="text-[0.95rem] text-ink">
+              <strong class="font-medium">Tu peux encore tout changer.</strong> La demande n’engage
+              ni sur la formation, ni sur le tarif.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-7">
+        {
+          externalBooking ? (
+            <div class="surface-card p-8 text-center">
+              <p class="text-[0.95rem] text-muted-foreground">
+                Les disponibilités sont gérées dans notre outil de réservation.
+              </p>
+              <Cta href={externalBooking} label="Voir les disponibilités" class="mt-5" arrow />
+            </div>
+          ) : (
+            /* I5 — the wizard sits well below the fold, so client:visible. */
+            <div class="surface-card overflow-hidden">
+              <BookingWizard
+                client:visible
+                formations={formations.map((formation) => ({
+                  formValue: formation.formValue,
+                  name: formation.name,
+                  public: formation.public,
+                }))}
+                lieux={lieux.map((lieu) => ({ name: lieu.name }))}
+                phone={site.contact.phone}
+                email={site.contact.email}
+                privacyNotice={site.form.privacyNotice}
+              />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

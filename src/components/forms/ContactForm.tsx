@@ -90,7 +90,10 @@ export default function ContactForm({
         }
 
         try {
-          const response = await fetch('/api/leads', {
+          // The trailing slash is required: astro.config sets
+          // `trailingSlash: 'always'`, so /api/leads (without it) is a 404 and
+          // every submission died in the catch block below as a network error.
+          const response = await fetch('/api/leads/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
@@ -223,7 +226,7 @@ export default function ContactForm({
         }}
       </form.Subscribe>
 
-      <p className="text-xs text-muted">{privacyNotice}</p>
+      <p className="text-xs text-muted-foreground">{privacyNotice}</p>
     </form>
   );
 }

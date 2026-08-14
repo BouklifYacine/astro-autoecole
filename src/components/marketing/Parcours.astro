@@ -1,0 +1,46 @@
+---
+import { autoecole } from '@/lib/autoecole';
+import SectionHeading from './SectionHeading.astro';
+
+const { etapes } = autoecole;
+---
+
+<section id="methode-parcours" class="section-space bg-surface">
+  <div class="container-shell">
+    <SectionHeading
+      eyebrow="Comment ça marche"
+      title="Quatre étapes, dans cet ordre."
+      lead="Rien d’automatique dans le processus : à l’étape 3, c’est un humain qui te rappelle avec les créneaux réellement libres."
+    />
+
+    <ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      {
+        etapes.map((etape, index) => (
+          <li class="relative">
+            <div class="flex items-center gap-3">
+              <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-semibold text-brand-contrast">
+                {index + 1}
+              </span>
+
+              {/*
+                The signature: road lane markings, used only to mean progression.
+                Solid behind a step you have passed, dashed ahead of it — the same
+                grammar as a real lane. Hidden below lg where the steps stack.
+              */}
+              {index < etapes.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  class="lane-rule hidden flex-1 text-brand lg:block"
+                  style="--lane-dash: 0.75rem; --lane-gap: 0.6rem;"
+                />
+              )}
+            </div>
+
+            <h3 class="mt-5 font-heading text-lg font-semibold text-ink">{etape.title}</h3>
+            <p class="mt-2 text-[0.95rem] text-muted-foreground">{etape.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

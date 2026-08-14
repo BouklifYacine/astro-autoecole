@@ -1,23 +1,62 @@
 ---
-import PageLayout from '../layouts/PageLayout.astro';
-import { site } from '../config/site.config';
-import { buildSeo } from '../lib/seo';
-import ButtonWithIcon from '@/components/ui/button-with-icon';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/marketing/SiteHeader.astro';
+import Hero from '@/components/marketing/Hero.astro';
+import TrustBar from '@/components/marketing/TrustBar.astro';
+import Formations from '@/components/marketing/Formations.astro';
+import Parcours from '@/components/marketing/Parcours.astro';
+import Reservation from '@/components/marketing/Reservation.astro';
+import Methode from '@/components/marketing/Methode.astro';
+import Moniteurs from '@/components/marketing/Moniteurs.astro';
+import Tarifs from '@/components/marketing/Tarifs.astro';
+import Avis from '@/components/marketing/Avis.astro';
+import Faq from '@/components/marketing/Faq.astro';
+import Contact from '@/components/marketing/Contact.astro';
+import FinalCta from '@/components/marketing/FinalCta.astro';
+import SiteFooter from '@/components/marketing/SiteFooter.astro';
+
+import { site } from '@/config/site.config';
+import { autoecole } from '@/lib/autoecole';
+import { buildSeo } from '@/lib/seo';
+// Seo.astro already emits Organization + WebSite on every page, so only the
+// page-specific nodes are passed here.
+import { faqSchema, localBusinessSchema } from '@/lib/schema-org';
 
 const seo = buildSeo({
   description: site.seo.defaultDescription,
   path: '/',
 });
+
+const schema = [
+  localBusinessSchema({
+    openingHours: autoecole.horaires.flatMap((creneau) => creneau.schemaOrg),
+    areaServed: autoecole.lieux.map((lieu) => lieu.name.split('—')[0].trim()),
+  }),
+  faqSchema(autoecole.faq),
+];
 ---
 
-<PageLayout seo={seo}>
-  <section class="container-shell section-space">
-   <div class="flex gap-3">
-     <ButtonWithIcon
-       label="Réserver un rendez vous"
-       href={site.contact.bookingUrl || site.nav.cta.href}
-       className="bg-emerald-600 hover:bg-emerald-700"
-     />
-   </div>
-  </section>
-</PageLayout>
+<BaseLayout seo={seo} schema={schema}>
+  <SiteHeader />
+
+  <main id="main">
+    {/* Ordered by the buying decision, not by template habit:
+        understand → picture yourself in it → act → be reassured → price →
+        proof → objections → contact. The booking flow sits right after the
+        four steps, where intent peaks. */}
+    <Hero />
+    <TrustBar />
+    <Formations />
+    <Parcours />
+    <Reservation />
+    <Methode />
+    <Moniteurs />
+    <Tarifs />
+    <Avis />
+    <Faq />
+    <Contact />
+    <FinalCta />
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

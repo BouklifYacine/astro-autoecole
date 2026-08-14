@@ -1,0 +1,45 @@
+---
+import { autoecole } from '@/lib/autoecole';
+import SectionHeading from './SectionHeading.astro';
+
+const { avis, aConfirmer } = autoecole;
+---
+
+<section id="avis" class="section-space bg-canvas scroll-mt-20">
+  <div class="container-shell">
+    <SectionHeading
+      eyebrow="Avis"
+      title="Ce que disent les élèves."
+      lead="Chaque avis précise la formation suivie : un retour sur le code ne dit rien de la qualité des heures de conduite."
+    />
+
+    <!--
+      Deliberately no star rating and no aggregate score. A rating is a claim that
+      has to come from a verified source (Google, Trustpilot); inventing one, even
+      in a demo, is the difference between a mock-up and a lie.
+    -->
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {
+        avis.items.map((item) => (
+          <li class="surface-card p-6">
+            <figure class="flex h-full flex-col">
+              <blockquote class="text-[0.95rem] text-ink">
+                <p>{item.comment}</p>
+              </blockquote>
+
+              <figcaption class="mt-auto flex flex-wrap items-baseline gap-x-2 gap-y-1 border-t border-(--color-border) pt-4 text-sm">
+                <span class="font-medium text-ink">{item.prenom}</span>
+                <span class="text-muted-foreground">· {item.formation}</span>
+                <span class="ml-auto text-xs text-muted-foreground">{item.date}</span>
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-6 rounded-(--radius-base) border border-dashed border-(--color-border) p-4 text-xs text-muted-foreground">
+      {avis.note} — {aConfirmer.agrement}
+    </p>
+  </div>
+</section>

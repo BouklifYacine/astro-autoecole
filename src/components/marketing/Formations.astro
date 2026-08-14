@@ -1,0 +1,70 @@
+---
+import { autoecole } from '@/lib/autoecole';
+import SectionHeading from './SectionHeading.astro';
+
+const { formations } = autoecole;
+
+const euros = new Intl.NumberFormat('fr-FR', {
+  style: 'currency',
+  currency: 'EUR',
+  maximumFractionDigits: 0,
+});
+---
+
+<section id="formations" class="section-space bg-canvas scroll-mt-20">
+  <div class="container-shell">
+    <SectionHeading
+      eyebrow="Formations"
+      title="Cinq formations, une seule à choisir."
+      lead="Chacune correspond à une situation précise. Si tu ne sais pas laquelle, l’évaluation de départ tranche à ta place."
+    />
+
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        formations.map((formation) => (
+          <li
+            class:list={[
+              'surface-card flex flex-col p-6 transition-colors hover:border-brand',
+              formation.featured && 'border-brand ring-1 ring-brand',
+            ]}
+          >
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="font-heading text-lg font-semibold text-ink">{formation.name}</h3>
+              {formation.featured && (
+                <span class="shrink-0 rounded-full bg-brand-tint px-2.5 py-1 text-xs font-medium text-brand-hover">
+                  Le plus choisi
+                </span>
+              )}
+            </div>
+
+            <p class="mt-1.5 text-sm text-muted-foreground">{formation.public}</p>
+            <p class="mt-4 mb-5 text-[0.95rem] text-ink">{formation.benefit}</p>
+
+            <dl class="mt-auto space-y-1.5 border-t border-(--color-border) pt-4 text-sm">
+              <div class="flex justify-between gap-3">
+                <dt class="text-muted-foreground">Volume</dt>
+                <dd class="text-right text-ink">{formation.volume}</dd>
+              </div>
+              <div class="flex justify-between gap-3">
+                <dt class="text-muted-foreground">À partir de</dt>
+                <dd class="text-right font-semibold text-ink">{euros.format(formation.priceFrom)}</dd>
+              </div>
+            </dl>
+
+            <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
+              <a
+                href="#reservation"
+                class="text-sm font-medium text-brand no-underline hover:underline"
+              >
+                Choisir cette formation
+              </a>
+              <a href="#tarifs" class="text-sm text-muted-foreground no-underline hover:text-ink hover:underline">
+                Voir le détail du tarif
+              </a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+---
+import { site } from '@/config/site.config';
+import Cta from './Cta.astro';
+
+const phoneHref = `tel:${site.contact.phone.replace(/\s/g, '')}`;
+---
+
+<header class="sticky top-0 z-50 border-b border-(--color-border) bg-surface/95 backdrop-blur-sm">
+  <div class="container-shell flex h-16 items-center justify-between gap-4 lg:h-18">
+    <a href="/" class="flex items-center gap-2.5 no-underline">
+      <!-- Logo mark: two lane markings converging. Vector, not an asset, so it
+           survives a brand change by editing currentColor. -->
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        class="size-7 shrink-0 text-brand"
+      >
+        <path d="M9.5 3 6 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+        <path
+          d="M15.5 3 18.5 21"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-dasharray="3 3.5"
+        />
+      </svg>
+      <span class="font-heading text-base leading-tight font-semibold text-ink sm:text-lg">
+        {site.name}
+      </span>
+    </a>
+
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-7">
+        {
+          site.nav.main.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-muted-foreground no-underline transition-colors hover:text-ink"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={phoneHref}
+        class="hidden text-sm font-medium text-ink no-underline sm:inline-flex lg:mr-2"
+      >
+        {site.contact.phone}
+      </a>
+
+      <Cta href={site.nav.cta.href} label={site.nav.cta.label} class="hidden sm:inline-flex" />
+
+      <button
+        type="button"
+        id="menu-toggle"
+        aria-expanded="false"
+        aria-controls="menu-mobile"
+        class="inline-flex items-center justify-center rounded-(--radius-base) border border-(--color-border) text-ink lg:hidden"
+      >
+        <span class="sr-only">Ouvrir le menu</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" class="size-5">
+          <path
+            d="M4 7h16M4 12h16M4 17h16"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Rendered open in the HTML and closed by the script below: without
+       JavaScript the navigation stays reachable instead of disappearing. -->
+  <div id="menu-mobile" class="border-t border-(--color-border) bg-surface lg:hidden">
+    <nav aria-label="Navigation principale (mobile)" class="container-shell py-4">
+      <ul class="flex flex-col gap-1">
+        {
+          site.nav.main.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="block rounded-(--radius-base) px-3 py-3 text-base text-ink no-underline hover:bg-brand-tint"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-4 flex flex-col gap-2">
+        <Cta href={site.nav.cta.href} label={site.nav.cta.label} class="w-full" />
+        <Cta href={phoneHref} label={`Appeler le ${site.contact.phone}`} variant="secondary" class="w-full" />
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu-mobile');
+
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      const label = toggle.querySelector('.sr-only');
+      if (label) label.textContent = open ? 'Fermer le menu' : 'Ouvrir le menu';
+    };
+
+    setOpen(false);
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Following an anchor inside a one-page nav does not reload anything, so the
+    // panel would otherwise stay open over the section the user just chose.
+    menu.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      setOpen(false);
+      toggle.focus();
+    });
+  }
+</script>

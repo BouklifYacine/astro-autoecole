@@ -52,7 +52,11 @@ describe("boilerplate contracts", () => {
   it("I7 — emits unique titles and descriptions when a build exists", () => {
     const dist = join(root, "dist");
     if (!existsSync(dist)) {
-      expect(readFileSync(join(src, "layouts", "BaseLayout.astro"), "utf8")).toContain("<title>{seo.title}</title>");
+      // Without a build, the most this can assert is that the title is rendered
+      // from the resolved SEO object at all. It lives in the Seo partial, not in
+      // BaseLayout, which delegates the whole <head> to it — asserting against
+      // BaseLayout made this branch fail on every fresh clone.
+      expect(readFileSync(join(src, "components", "seo", "Seo.astro"), "utf8")).toContain("<title>{seo.title}</title>");
       return;
     }
     const htmlFiles = filesIn(dist).filter((path) => path.endsWith(".html"));
@@ -75,6 +79,16 @@ describe("boilerplate contracts", () => {
     expect(existsSync(notFound)).toBe(true);
     // A soft 404 is a 404 document that does not say it is one.
     expect(readFileSync(notFound, "utf8")).toMatch(/introuvable|not found|404/i);
+  });
+
+  it("I2b — every internal fetch honours trailingSlash: 'always'", () => {
+    // Under `trailingSlash: 'always'` a POST to /api/leads is a 404, and the
+    // browser reports it as a failed request rather than a routing mistake — the
+    // contact form silently swallowed every submission this way.
+    const violations = sourceFiles()
+      .filter((path) => /fetch\(\s*["'`]\/api\/[^"'`]*[^/"'`]["'`]/.test(readFileSync(path, "utf8")))
+      .map((path) => relative(root, path));
+    expect(violations).toEqual([]);
   });
 
   it("I13 — keeps provider-specific imports in adapters", () => {

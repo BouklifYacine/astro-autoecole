@@ -1,0 +1,29 @@
+---
+import { site } from '@/config/site.config';
+import Cta from './Cta.astro';
+
+const phoneHref = `tel:${site.contact.phone.replace(/\s/g, '')}`;
+---
+
+<!-- The dark band and the footer form one continuous block: two dark sections
+     separated by a rule would read as a mistake. -->
+<section class="bg-ink">
+  <div class="container-shell py-16 sm:py-20">
+    <div class="grid items-end gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <h2 class="text-3xl text-white sm:text-4xl">
+          Le plus dur, c’est de commencer.
+        </h2>
+        <p class="mt-4 max-w-xl text-lg text-white/70">
+          Indique ta formation et tes disponibilités : on te rappelle sous 24 h ouvrées avec les
+          créneaux réellement libres. Sans engagement, et sans avoir à payer pour savoir.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
+        <Cta href={site.nav.cta.href} label="Voir les disponibilités" arrow />
+        <Cta href={phoneHref} label={site.contact.phone} variant="onDark" />
+      </div>
+    </div>
+  </div>
+</section>

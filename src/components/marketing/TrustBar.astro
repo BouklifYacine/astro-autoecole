@@ -1,0 +1,31 @@
+---
+import { autoecole } from '@/lib/autoecole';
+
+const { trust, aConfirmer } = autoecole;
+---
+
+<!-- Not cards: four columns separated by rules. Nothing here is clickable, so a
+     bordered box would only add noise. -->
+<section class="border-y border-(--color-border) bg-surface">
+  <div class="container-shell">
+    <ul class="grid gap-px sm:grid-cols-2 lg:grid-cols-4">
+      {
+        trust.map((item) => (
+          <li class="py-7 sm:px-6 sm:first:pl-0 lg:border-l lg:border-(--color-border) lg:first:border-l-0 lg:first:pl-0">
+            <p class="font-heading text-base font-semibold text-ink">{item.title}</p>
+            <p class="mt-1.5 text-sm text-muted-foreground">{item.detail}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!--
+      The success rate is the one number an auto-école is expected to show, and
+      the one this demo will not invent: it is published by the state per school.
+      An empty, labelled slot is more honest than a plausible figure.
+    -->
+    <p class="border-t border-dashed border-(--color-border) py-4 text-xs text-muted-foreground">
+      {aConfirmer.tauxReussite}
+    </p>
+  </div>
+</section>

@@ -1,0 +1,77 @@
+---
+import { autoecole } from '@/lib/autoecole';
+import { site } from '@/config/site.config';
+import Cta from './Cta.astro';
+import MediaSlot from './MediaSlot.astro';
+
+const { hero } = autoecole;
+
+/**
+ * Facts, not claims. Each one is verifiable from the content file, which is why
+ * none of them is a percentage: the success rate is a regulated figure and is
+ * deliberately left unset (see autoecole.json → aConfirmer).
+ */
+const proofs = [
+  `${autoecole.lieux.length} points de rendez-vous`,
+  'Boîte manuelle et automatique',
+  'Moniteurs diplômés d’État',
+  'Tarifs affichés, examens compris',
+];
+---
+
+<section class="section-space bg-canvas">
+  <div class="container-shell grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+    <div class="lg:col-span-7">
+      <p class="flex items-center gap-2 text-sm font-medium text-brand">
+        <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" class="size-4 shrink-0">
+          <path
+            d="M8 14.5s5-4.03 5-7.5a5 5 0 0 0-10 0c0 3.47 5 7.5 5 7.5Z"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linejoin="round"></path>
+          <circle cx="8" cy="7" r="1.75" stroke="currentColor" stroke-width="1.5"></circle>
+        </svg>
+        {hero.eyebrow}
+      </p>
+
+      <h1 class="mt-4 text-4xl text-ink sm:text-5xl lg:text-[3.5rem]">
+        {hero.title}
+      </h1>
+
+      <p class="mt-5 max-w-2xl text-lg text-muted-foreground">{hero.lead}</p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Cta href={site.nav.cta.href} label="Voir les disponibilités" arrow />
+        <Cta href="#formations" label="Découvrir les formations" variant="secondary" />
+      </div>
+
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+        {
+          proofs.map((proof) => (
+            <li class="flex items-center gap-2 text-sm text-muted-foreground">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                fill="none"
+                class="size-4 shrink-0 text-success"
+              >
+                <path
+                  d="m3.5 8.5 3 3 6-7"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              {proof}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="lg:col-span-5">
+      <MediaSlot media={hero.media} showBrief />
+    </div>
+  </div>
+</section>

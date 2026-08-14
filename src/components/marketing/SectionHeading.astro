@@ -1,0 +1,42 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  /** Section headings are H2. The page has exactly one H1, in the hero. */
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { eyebrow, title, lead, tone = 'light', class: className = '' } = Astro.props;
+---
+
+<div class:list={['section-heading', className]}>
+  {
+    eyebrow && (
+      <p
+        class:list={[
+          // mt-0 / text-xs override the `.section-heading > p` rule in global.css,
+          // which is written for the lead paragraph, not the eyebrow.
+          'mt-0 mb-3 text-xs font-semibold tracking-[0.12em] uppercase',
+          // brand-hover, not brand: at 12px the lighter step measures 4.49:1 on
+          // the tinted reservation background — a hair under AA.
+          tone === 'dark' ? 'text-white/60' : 'text-brand-hover',
+        ]}
+      >
+        {eyebrow}
+      </p>
+    )
+  }
+
+  <h2
+    class:list={[
+      'text-3xl sm:text-4xl',
+      tone === 'dark' ? 'text-white' : 'text-ink',
+    ]}
+  >
+    {title}
+  </h2>
+
+  {lead && <p class:list={[tone === 'dark' && 'text-white/70']}>{lead}</p>}
+</div>

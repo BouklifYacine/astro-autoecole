@@ -1,0 +1,133 @@
+---
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client';
+
+import ContactForm from '@/components/forms/ContactForm';
+import { site } from '@/config/site.config';
+import { autoecole } from '@/lib/autoecole';
+import SectionHeading from './SectionHeading.astro';
+
+const { horaires, lieux } = autoecole;
+const { address } = site.contact;
+
+const phoneHref = `tel:${site.contact.phone.replace(/\s/g, '')}`;
+const mapsQuery = encodeURIComponent(
+  `${site.name}, ${address.street}, ${address.postalCode} ${address.city}`,
+);
+---
+
+<section id="contact" class="section-space bg-canvas scroll-mt-20">
+  <div class="container-shell">
+    <SectionHeading
+      eyebrow="Contact"
+      title="Parler à quelqu’un avant de t’engager."
+      lead="Le téléphone reste le plus rapide pendant les horaires d’ouverture. Sinon, le formulaire arrive directement chez nous."
+    />
+
+    <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
+      <div class="lg:col-span-5">
+        <dl class="space-y-6">
+          <div>
+            <dt class="text-sm font-medium text-muted-foreground">Agence</dt>
+            <dd class="mt-1 text-[0.95rem] text-ink">
+              <address class="not-italic">
+                {address.street}<br />
+                {address.postalCode}
+                {address.city}
+              </address>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+                rel="noopener"
+                target="_blank"
+                class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-brand no-underline hover:underline"
+              >
+                Ouvrir dans Google Maps
+                <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" class="size-3.5">
+                  <path
+                    d="M6 3h7v7M13 3 4 12"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </a>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-sm font-medium text-muted-foreground">Téléphone</dt>
+            <dd class="mt-1">
+              <a href={phoneHref} class="text-lg font-semibold text-ink no-underline hover:text-brand">
+                {site.contact.phone}
+              </a>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-sm font-medium text-muted-foreground">Email</dt>
+            <dd class="mt-1">
+              <a
+                href={`mailto:${site.contact.email}`}
+                class="text-[0.95rem] text-ink no-underline hover:text-brand">{site.contact.email}</a
+              >
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-sm font-medium text-muted-foreground">Horaires</dt>
+            <dd class="mt-1">
+              <ul class="text-[0.95rem]">
+                {
+                  horaires.map((creneau) => (
+                    <li class="flex justify-between gap-4 border-b border-(--color-border) py-1.5 last:border-b-0">
+                      <span class="text-ink">{creneau.jours}</span>
+                      <span class="text-muted-foreground">{creneau.heures}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-sm font-medium text-muted-foreground">Zone desservie</dt>
+            <dd class="mt-1 text-[0.95rem] text-muted-foreground">
+              {lieux.map((lieu) => lieu.name.split('—')[0].trim()).join(' · ')}
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="surface-card p-6 sm:p-8 lg:col-span-7">
+        <h3 class="font-heading text-lg font-semibold text-ink">Écrire à l’équipe</h3>
+        <p class="mt-1.5 mb-6 text-sm text-muted-foreground">
+          Réponse sous 24 h ouvrées. Le téléphone est demandé parce qu’on rappelle : c’est plus
+          rapide qu’un aller-retour par mail.
+        </p>
+
+        {/* I5 — below the fold on every page it appears on, so client:visible. */}
+        {
+          site.form.enabled ? (
+            <ContactForm
+              client:visible
+              fields={site.form.fields}
+              privacyNotice={site.form.privacyNotice}
+              requireAcknowledgement={site.form.requireAcknowledgement}
+              marketingOptIn={site.form.marketingOptIn}
+              captchaSiteKey={PUBLIC_TURNSTILE_SITE_KEY}
+              fallbackEmail={site.contact.email}
+              submitLabel="Envoyer ma demande"
+            />
+          ) : (
+            <p class="text-[0.95rem]">
+              Écrivez-nous à <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+            </p>
+          )
+        }
+
+        <p class="mt-5 text-xs text-muted-foreground">
+          <a href="/politique-confidentialite/" class="text-brand">Politique de confidentialité</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

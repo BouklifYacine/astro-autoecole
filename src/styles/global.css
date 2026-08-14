@@ -12,21 +12,43 @@
  * to give the site a coherent new identity (P1.1 acceptance criterion).
  */
 @theme {
-  /* brand — the six knobs */
-  --color-brand: oklch(0.55 0.16 255);
-  --color-brand-contrast: oklch(0.99 0 0);
-  --color-ink: oklch(0.22 0.01 260);
-  --color-muted: oklch(0.52 0.01 260);
-  --color-surface: oklch(0.99 0.002 260);
-  --radius-base: 0.625rem;
+  /* brand — the knobs. Each colour has ONE role; using it elsewhere is the bug.
+     Hex equivalents are kept in comments because clients speak hex. */
 
-  /* derived */
-  --color-border: oklch(0.9 0.005 260);
+  /* Actions only: primary CTA, important links, selected states. Never a surface. */
+  --color-brand: oklch(0.546 0.245 262.881); /* #2563EB */
+  --color-brand-hover: oklch(0.488 0.243 264.376); /* #1D4ED8 */
+  /* The one exception to "brand is never a surface": accented section grounds and
+     the selected state of a choice. Tint, not the action colour itself. */
+  --color-brand-tint: oklch(0.947 0.024 259); /* #E8F0FE */
+  --color-brand-contrast: oklch(1 0 0);
 
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Positive proof and validation only. Never decoration, never a CTA. */
+  --color-success: oklch(0.529 0.138 148.5); /* #188038 */
+  --color-success-tint: oklch(0.955 0.026 152); /* #E6F4EA */
 
-  --spacing-section: 5rem;
+  --color-ink: oklch(0.208 0.04 265.75); /* #111827 — text, and the dark band */
+  --color-canvas: oklch(0.984 0.002 247.8); /* #F8F9FA — page ground */
+  --color-surface: oklch(1 0 0); /* #FFFFFF — cards, header, panels */
+
+  --radius-base: 0.75rem;
+
+  /* Sections breathe on desktop without wasting a mobile screen. */
+  --spacing-section: clamp(3.5rem, 8vw, 6.5rem);
 }
+
+/* Three tokens are deliberately NOT declared above — `@theme inline` below
+   redefines them from the shadcn layer and wins, so a second declaration here
+   would be dead code that reads like the source of truth:
+
+     --font-sans      → Inter Variable
+     --color-border   → var(--border), #DADCE0
+     --color-muted    → var(--muted), a near-white SURFACE
+
+   That last one is a trap worth naming. In shadcn's vocabulary `--muted` is a
+   background and `--muted-foreground` is the text on it, so `text-muted` paints
+   text almost white and silently makes every secondary paragraph unreadable.
+   Secondary text uses `text-muted-foreground`. */
 
 @layer base {
   :root {
@@ -41,13 +63,27 @@
   }
 
   body {
-    background: var(--color-surface);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
     line-height: 1.6;
     /* Nothing should ever scroll sideways. */
     overflow-x: hidden;
     @apply bg-background text-foreground;
+  }
+
+  /* Geist for headings, Inter for reading. Both already ship with the project —
+     no new dependency, and the pair gives hierarchy without a decorative serif. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    /* Long French headings orphan badly at 375px. */
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   /* I12 — a visible focus ring on every interactive element. */
@@ -63,6 +99,15 @@
   input[type="submit"] {
     min-block-size: 48px;
     min-inline-size: 48px;
+  }
+
+  /* src/components/ui sizes its controls for product density (h-8 = 32px). On a
+     public form that is too small to tap and reads as unfinished, so the floor is
+     raised here rather than by forking every control. */
+  input:not([type="checkbox"], [type="radio"]),
+  select,
+  textarea {
+    min-block-size: 2.75rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -95,34 +140,128 @@
     padding: 0.75rem 1rem;
     border-radius: var(--radius-base);
   }
+
+  /* ------------------------------------------------------------------ *
+   * Layout primitives.
+   *
+   * These four classes were referenced by ten pages and defined nowhere,
+   * so every page in the project rendered edge-to-edge with no rhythm.
+   * ------------------------------------------------------------------ */
+
+  .container-shell {
+    inline-size: 100%;
+    max-inline-size: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .section-space {
+    padding-block: var(--spacing-section);
+  }
+
+  .section-heading {
+    max-inline-size: 46rem;
+    margin-block-end: clamp(2rem, 5vw, 3.25rem);
+  }
+
+  .section-heading > p {
+    margin-block-start: 1rem;
+    color: var(--muted-foreground);
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  }
+
+  /* Used by the 404, 500, legal and blog pages, which inherited it from the
+     boilerplate without it ever being defined. */
+  .eyebrow {
+    color: var(--color-brand-hover);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Not a decorative box: used only where a group is itself a unit of
+     interaction or a distinct offer the reader compares. */
+  .surface-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-base);
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Signature: road lane markings.
+   *
+   * Reserved for ONE meaning — progression through a sequence. It appears
+   * between the steps of "comment ça marche" and in the booking wizard's
+   * step indicator. Nowhere else, and never as decoration.
+   * ------------------------------------------------------------------ */
+
+  .lane-rule {
+    --lane-dash: 1.25rem;
+    --lane-gap: 1rem;
+    background-image: repeating-linear-gradient(
+      to right,
+      currentColor 0 var(--lane-dash),
+      transparent var(--lane-dash) calc(var(--lane-dash) + var(--lane-gap))
+    );
+    block-size: 2px;
+    opacity: 0.35;
+  }
+
+  .lane-rule[data-orientation="vertical"] {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      currentColor 0 var(--lane-dash),
+      transparent var(--lane-dash) calc(var(--lane-dash) + var(--lane-gap))
+    );
+    block-size: auto;
+    inline-size: 2px;
+  }
+
+  /* The step is done: the lane behind it is solid, not dashed. */
+  .lane-rule[data-complete] {
+    background-image: none;
+    background-color: currentColor;
+    opacity: 1;
+  }
 }
 /*---break---
  */
+/**
+ * The shadcn layer, realigned on the brand tokens above.
+ *
+ * These drive Button, Input, Field and the rest of src/components/ui. Left at the
+ * generator defaults, `--primary` was oklch(0.488 0.243 264.376) — a blue-violet
+ * that fought the brand blue everywhere the two met.
+ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: oklch(0.984 0.002 247.8); /* #F8F9FA */
+  --foreground: oklch(0.208 0.04 265.75); /* #111827 */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.208 0.04 265.75);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.488 0.243 264.376);
-  --primary-foreground: oklch(0.97 0.014 254.604);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --popover-foreground: oklch(0.208 0.04 265.75);
+  --primary: oklch(0.546 0.245 262.881); /* #2563EB */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.968 0.003 247.8);
+  --secondary-foreground: oklch(0.208 0.04 265.75);
+  --muted: oklch(0.968 0.003 247.8);
+  --muted-foreground: oklch(0.446 0.026 256.8); /* #4B5563 — 7.0:1 on canvas */
+  --accent: oklch(0.947 0.024 259); /* #E8F0FE */
+  --accent-foreground: oklch(0.488 0.243 264.376);
+  --destructive: oklch(0.505 0.213 27.5); /* darkened for AA on white */
+  --border: oklch(0.887 0.004 258); /* #DADCE0 */
+  --input: oklch(0.887 0.004 258);
+  --ring: oklch(0.546 0.245 262.881);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  /* Every control in src/components/ui is `rounded-2xl`, i.e. --radius * 1.8.
+     0.4375rem lands them at ~12.6px, in the 8–12px band the brief asks for and
+     consistent with the 12px --radius-base used by .surface-card. */
+  --radius: 0.4375rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.546 0.245 262.881);
