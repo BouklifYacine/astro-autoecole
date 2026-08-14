@@ -1,0 +1,18 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { ResolvedSeo } from '@/lib/seo';
+import type { SchemaGraph } from '@/lib/schema-org';
+
+interface Props {
+  seo: ResolvedSeo;
+  schema?: SchemaGraph | SchemaGraph[];
+}
+
+const { seo, schema } = Astro.props;
+---
+
+<BaseLayout seo={seo} schema={schema}>
+  <main id="main">
+    <slot />
+  </main>
+</BaseLayout>

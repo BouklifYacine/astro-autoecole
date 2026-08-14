@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths, GetStaticPathsOptions, Page } from "astro";
+
+import PageLayout from "../../layouts/PageLayout.astro";
+import { visiblePosts } from "../../lib/blog";
+import { buildSeo } from "../../lib/seo";
+import { breadcrumbSchema } from "../../lib/schema-org";
+import { formatDate } from "../../lib/utils";
+import type { BlogEntry } from "../../lib/blog";
+
+export const getStaticPaths = (async ({ paginate }: GetStaticPathsOptions) => {
+  const posts = visiblePosts(await getCollection("blog"));
+  return paginate(posts, { pageSize: 6 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: Page<BlogEntry> };
+const currentPath = page.url.current;
+const seo = buildSeo({
+  title: "Blog",
+  description: "Articles et ressources à adapter à l’activité du site.",
+  path: currentPath,
+});
+const schema = breadcrumbSchema([
+  { name: "Accueil", path: "/" },
+  { name: "Blog", path: "/blog/" },
+]);
+---
+
+<PageLayout seo={seo} schema={schema}>
+  <section class="container-shell section-space">
+    <div class="section-heading"><div class="eyebrow">Ressources</div><h1>Blog</h1><p>Remplacez l’article de démonstration par vos contenus éditoriaux.</p></div>
+    {page.data.length ? (
+      <div class="responsive-grid">
+        {page.data.map((post) => (
+          <article class="surface-card" style="padding: 1.25rem;">
+            <div class="eyebrow">{formatDate(post.data.publishedAt)}</div>
+            <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+            <p class="muted">{post.data.description}</p>
+            <a class="button-secondary" href={`/blog/${post.id}/`}>Lire l’article</a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="surface-card" style="padding: 1.5rem;"><p>Aucun article publié pour le moment.</p></div>
+    )}
+    <nav aria-label="Pagination" style="display: flex; justify-content: space-between; margin-top: 2rem;">
+      {page.url.prev && <a class="button-secondary" rel="prev" href={page.url.prev}>Articles précédents</a>}
+      {page.url.next && <a class="button-secondary" rel="next" href={page.url.next}>Articles suivants</a>}
+    </nav>
+  </section>
+</PageLayout>

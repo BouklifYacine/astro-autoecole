@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import { render } from "astro:content";
+
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { articleSchema, breadcrumbSchema } from "../../lib/schema-org";
+import { buildSeo } from "../../lib/seo";
+import { formatDate } from "../../lib/utils";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const path = `/blog/${post.id}/`;
+const seo = buildSeo({
+  title: post.data.title,
+  description: post.data.description,
+  path,
+  noindex: post.data.noindex,
+  type: "article",
+  image: post.data.image,
+});
+const schema = [
+  articleSchema({
+    title: post.data.title,
+    description: post.data.description,
+    path,
+    publishedAt: post.data.publishedAt,
+    updatedAt: post.data.updatedAt,
+    image: post.data.image,
+  }),
+  breadcrumbSchema([
+    { name: "Accueil", path: "/" },
+    { name: "Blog", path: "/blog/" },
+    { name: post.data.title, path },
+  ]),
+];
+const { Content } = await render(post);
+---
+
+<ArticleLayout seo={seo} schema={schema}>
+  <div class="eyebrow">{formatDate(post.data.publishedAt)}</div>
+  <h1 style="max-width: 16ch; font-size: clamp(2.25rem, 6vw, 4.5rem); letter-spacing: -0.06em; line-height: 1;">{post.data.heading ?? post.data.title}</h1>
+  <p class="lead-copy">{post.data.description}</p>
+  <div class="surface-card" style="padding: clamp(1.25rem, 4vw, 2.5rem); margin-top: 2rem;">
+    <Content />
+  </div>
+</ArticleLayout>

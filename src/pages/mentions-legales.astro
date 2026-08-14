@@ -1,0 +1,30 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { site } from "../config/site.config";
+import pageContent from "../content/site.json";
+import { buildSeo } from "../lib/seo";
+
+const seo = buildSeo({
+  title: "Mentions légales",
+  description: "Informations légales et coordonnées de l’éditeur du site.",
+  path: "/mentions-legales/",
+  noindex: true,
+});
+---
+
+<PageLayout seo={seo}>
+  <section class="container-shell section-space">
+    <div class="section-heading"><div class="eyebrow">Informations</div><h1>Mentions légales</h1><p>{pageContent.legal.mentionsIntro}</p></div>
+    <div class="surface-card" style="padding: 1.5rem;">
+      <h2>Éditeur</h2>
+      <p><strong>{site.legalName}</strong></p>
+      <p>{site.legal.status}</p>
+      <p>{site.legal.address}</p>
+      {site.legal.siren && <p>SIREN : {site.legal.siren}</p>}
+      <p>{site.legal.email}</p>
+      <h2>Hébergement</h2>
+      <p>À compléter avec l’hébergeur réellement utilisé pour le projet.</p>
+      <p>Les informations de cette page doivent être relues avant publication.</p>
+    </div>
+  </section>
+</PageLayout>

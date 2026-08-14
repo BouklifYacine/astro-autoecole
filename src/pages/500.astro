@@ -1,0 +1,24 @@
+---
+Astro.response.status = 500;
+
+import PageLayout from "../layouts/PageLayout.astro";
+import { buildSeo } from "../lib/seo";
+
+const seo = buildSeo({
+  title: "Service indisponible",
+  description: "Une erreur temporaire empêche l’affichage de cette page.",
+  path: "/500/",
+  noindex: true,
+});
+---
+
+<PageLayout seo={seo}>
+  <section class="container-shell section-space">
+    <div class="surface-card" style="padding: 2rem;">
+      <div class="eyebrow">500</div>
+      <h1>Une erreur temporaire est survenue.</h1>
+      <p class="lead-copy">Réessayez dans quelques instants.</p>
+      <a class="button-primary" href="/">Retour à l’accueil</a>
+    </div>
+  </section>
+</PageLayout>

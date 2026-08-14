@@ -1,0 +1,38 @@
+---
+import { PUBLIC_GA4_MEASUREMENT_ID, PUBLIC_POSTHOG_HOST, PUBLIC_POSTHOG_KEY } from "astro:env/client";
+import { site } from "../../config/site.config";
+
+interface Props {
+  gaMeasurementId?: string;
+  posthogKey?: string;
+  posthogHost?: string;
+}
+
+const {
+  gaMeasurementId = PUBLIC_GA4_MEASUREMENT_ID ?? "",
+  posthogKey = PUBLIC_POSTHOG_KEY ?? "",
+  posthogHost = PUBLIC_POSTHOG_HOST ?? "",
+} = Astro.props;
+const enabled = site.features.analytics && Boolean(gaMeasurementId || posthogKey);
+---
+
+{enabled && (
+  <>
+    <aside
+      class="cookie-banner"
+      data-cookie-banner
+      data-ga-measurement-id={gaMeasurementId}
+      data-posthog-key={posthogKey}
+      data-posthog-host={posthogHost}
+      hidden
+    >
+      <strong>Votre vie privée</strong>
+      <p class="muted">Les outils de mesure d’audience sont désactivés tant que vous n’avez pas accepté.</p>
+      <div class="cookie-actions">
+        <button type="button" data-consent="accept">Accepter</button>
+        <button type="button" data-consent="reject">Refuser</button>
+      </div>
+    </aside>
+    <script src="../../scripts/consent-analytics.ts"></script>
+  </>
+)}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Astro"
+  short_description: "Astro architecture, routing, adapters, integrations and best practices"
+  default_prompt: "Use $astro to review this Astro implementation and apply current best practices."

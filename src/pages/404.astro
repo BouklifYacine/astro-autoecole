@@ -1,0 +1,25 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { buildSeo } from '../lib/seo';
+
+// I8 — what matters is the HTTP status, not the wording. A soft 404 (status 200
+// with "not found" text) pollutes the index, and Google runs no JavaScript on a
+// non-200 response. Astro serves this file as a real 404 on a static build.
+const seo = buildSeo({
+  title: 'Page introuvable',
+  description: 'Cette page n’existe pas ou a été déplacée.',
+  path: '/404/',
+  noindex: true,
+});
+---
+
+<PageLayout seo={seo}>
+  <section class="container-shell section-space">
+    <div class="surface-card" style="padding: 2rem;">
+      <div class="eyebrow">404</div>
+      <h1>Page introuvable</h1>
+      <p class="lead-copy">Le lien est peut-être obsolète, ou la page a été déplacée.</p>
+      <p><a class="button-primary" href="/">Retour à l’accueil</a></p>
+    </div>
+  </section>
+</PageLayout>

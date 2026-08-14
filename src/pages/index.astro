@@ -1,0 +1,23 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { site } from '../config/site.config';
+import { buildSeo } from '../lib/seo';
+import ButtonWithIcon from '@/components/ui/button-with-icon';
+
+const seo = buildSeo({
+  description: site.seo.defaultDescription,
+  path: '/',
+});
+---
+
+<PageLayout seo={seo}>
+  <section class="container-shell section-space">
+   <div class="flex gap-3">
+     <ButtonWithIcon
+       label="Réserver un rendez vous"
+       href={site.contact.bookingUrl || site.nav.cta.href}
+       className="bg-emerald-600 hover:bg-emerald-700"
+     />
+   </div>
+  </section>
+</PageLayout>

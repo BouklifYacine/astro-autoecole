@@ -1,0 +1,27 @@
+{
+  "home": {
+    "eyebrow": "Contenu de démonstration",
+    "title": "Présentez votre activité clairement.",
+    "description": "Remplacez ce contenu par votre proposition de valeur, vos preuves et les prochaines étapes pour vos visiteurs.",
+    "primaryCta": "Parler de votre projet",
+    "secondaryCta": "Voir les services",
+    "servicesTitle": "Une base prête à adapter",
+    "servicesDescription": "Les blocs ci-dessous sont volontairement génériques : adaptez le contenu sans redessiner le système.",
+    "stepsTitle": "Un parcours simple",
+    "steps": [
+      { "title": "Clarifier", "description": "Présentez le problème que vous résolvez et pour qui." },
+      { "title": "Rassurer", "description": "Ajoutez votre méthode, vos preuves et vos informations utiles." },
+      { "title": "Convertir", "description": "Proposez une action claire, accessible et mesurable." }
+    ],
+    "faq": [
+      { "question": "Que faut-il remplacer en premier ?", "answer": "Commencez par la configuration du site et le contenu. Les composants sont conçus pour rester génériques." },
+      { "question": "Le formulaire est-il activé immédiatement ?", "answer": "La page est prête, mais les clés du captcha, du webhook et du fournisseur mail doivent être ajoutées avant la production." },
+      { "question": "Peut-on changer d’hébergeur ?", "answer": "Oui. Les intégrations externes passent par des adaptateurs et le contenu reste indépendant de Cloudflare." }
+    ]
+  },
+  "legal": {
+    "mentionsIntro": "Cette page contient les informations légales à compléter avant publication.",
+    "privacyIntro": "Cette page décrit les traitements de données et doit être relue avec les informations réelles du projet.",
+    "cookiesIntro": "Cette page présente les cookies et traceurs utilisés par le site après configuration des fonctionnalités."
+  }
+}

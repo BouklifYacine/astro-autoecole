@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Image à remplacer</title>
+  <desc id="desc">Visuel de démonstration du boilerplate.</desc>
+  <rect width="1200" height="630" fill="#dbeafe" />
+  <circle cx="940" cy="160" r="220" fill="#2563eb" opacity=".18" />
+  <circle cx="210" cy="540" r="270" fill="#1d4ed8" opacity=".12" />
+  <text x="80" y="300" fill="#172033" font-family="Arial, sans-serif" font-size="64" font-weight="700">Image à remplacer</text>
+</svg>

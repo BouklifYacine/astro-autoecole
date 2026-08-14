@@ -1,0 +1,36 @@
+---
+import { site } from '@/config/site.config';
+import Seo from '@/components/seo/Seo.astro';
+import type { ResolvedSeo } from '@/lib/seo';
+import type { SchemaGraph } from '@/lib/schema-org';
+
+import '@/styles/global.css';
+
+interface Props {
+  seo: ResolvedSeo;
+  schema?: SchemaGraph | SchemaGraph[];
+  bodyClass?: string;
+  directionContract?: string;
+}
+
+const { seo, schema, bodyClass, directionContract } = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={site.brand.themeColor} />
+    <link rel="icon" href={site.brand.favicon} />
+
+    <Seo seo={seo} schema={schema} />
+
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    {directionContract && <Fragment set:html={`<!-- ${directionContract} -->`} />}
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <slot />
+  </body>
+</html>

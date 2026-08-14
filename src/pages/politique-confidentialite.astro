@@ -1,0 +1,29 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { site } from "../config/site.config";
+import pageContent from "../content/site.json";
+import { buildSeo } from "../lib/seo";
+
+const seo = buildSeo({
+  title: "Politique de confidentialité",
+  description: "Informations sur les données collectées, leur usage, leur conservation et vos droits.",
+  path: "/politique-confidentialite/",
+  noindex: true,
+});
+---
+
+<PageLayout seo={seo}>
+  <section class="container-shell section-space">
+    <div class="section-heading"><div class="eyebrow">Données personnelles</div><h1>Politique de confidentialité</h1><p>{pageContent.legal.privacyIntro}</p></div>
+    <div class="surface-card" style="padding: 1.5rem;">
+      <h2>Responsable du traitement</h2>
+      <p>{site.legalName}, {site.legal.email}.</p>
+      <h2>Finalité et base légale</h2>
+      <p>Les demandes envoyées depuis le formulaire servent à répondre à la personne. La base légale par défaut est la prise de mesures précontractuelles à sa demande.</p>
+      <h2>Durée, destinataires et droits</h2>
+      <p>Complétez ces informations avec les durées réellement appliquées, les destinataires effectifs et les modalités d’exercice des droits.</p>
+      <h2>Contact</h2>
+      <p>Pour toute question, écrivez à {site.legal.email}.</p>
+    </div>
+  </section>
+</PageLayout>

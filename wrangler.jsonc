@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "astro-boilerplate",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-08-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+
+  // No kv_namespaces here on purpose.
+  //
+  // The default `providers.kv` is "memory", which needs no binding, and an
+  // unresolvable placeholder id breaks `astro dev` outright: the Cloudflare plugin
+  // tries to open a remote session for the binding and the API rejects the fake id,
+  // so a fresh clone would not even start. That violates rule 2 — nothing broken by
+  // default.
+  //
+  // `bun run setup:cloudflare` creates the namespace and writes the block below,
+  // and switching `providers.kv` to "cloudflare" is what makes it required:
+  //
+  // "kv_namespaces": [{ "binding": "LEAD_RATE_LIMIT", "id": "<generated>" }]
+  //
+  // Add "remote": true only to work against the real namespace from your machine;
+  // local development runs on miniflare's simulated KV without it.
+
+  "routes": [],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

@@ -1,0 +1,47 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ContactForm from '../components/forms/ContactForm';
+import { site } from '../config/site.config';
+import { buildSeo } from '../lib/seo';
+import { breadcrumbSchema } from '../lib/schema-org';
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client';
+
+const seo = buildSeo({
+  title: 'Contact',
+  description: `Contacter ${site.name} — réponse sous 48 heures ouvrées.`,
+  path: '/contact/',
+});
+
+const schema = breadcrumbSchema([
+  { name: 'Accueil', path: '/' },
+  { name: 'Contact', path: '/contact/' },
+]);
+---
+
+<PageLayout seo={seo} schema={schema}>
+  <section class="container-shell section-space">
+    <div class="section-heading">
+      <h1>Contact</h1>
+      <p>Décrivez votre besoin, nous revenons vers vous rapidement.</p>
+    </div>
+
+    <div class="surface-card" style="padding: clamp(1.25rem, 4vw, 2rem); max-width: 40rem;">
+      {/* I5 — below the fold on every page it appears on, so client:visible. */}
+      {site.form.enabled ? (
+        <ContactForm
+          client:visible
+          fields={site.form.fields}
+          privacyNotice={site.form.privacyNotice}
+          requireAcknowledgement={site.form.requireAcknowledgement}
+          marketingOptIn={site.form.marketingOptIn}
+          captchaSiteKey={PUBLIC_TURNSTILE_SITE_KEY}
+          fallbackEmail={site.contact.email}
+        />
+      ) : site.contact.email ? (
+        <p>Écrivez-nous à <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.</p>
+      ) : (
+        <p>Le formulaire de contact n’est pas encore configuré.</p>
+      )}
+    </div>
+  </section>
+</PageLayout>

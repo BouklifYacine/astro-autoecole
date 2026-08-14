@@ -1,0 +1,26 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import pageContent from "../content/site.json";
+import { buildSeo } from "../lib/seo";
+
+const seo = buildSeo({
+  title: "Gestion des cookies",
+  description: "Découvrez les cookies et traceurs utilisés sur ce site et les choix disponibles.",
+  path: "/gestion-cookies/",
+  noindex: true,
+});
+---
+
+<PageLayout seo={seo}>
+  <section class="container-shell section-space">
+    <div class="section-heading"><div class="eyebrow">Préférences</div><h1>Gestion des cookies</h1><p>{pageContent.legal.cookiesIntro}</p></div>
+    <div class="surface-card" style="padding: 1.5rem;">
+      <h2>Cookies nécessaires</h2>
+      <p>Le site peut utiliser les éléments strictement nécessaires à son fonctionnement.</p>
+      <h2>Mesure d’audience</h2>
+      <p>Les outils optionnels ne sont chargés qu’après un choix explicite. Les boutons accepter et refuser sont présentés au même niveau.</p>
+      <h2>Modifier votre choix</h2>
+      <p>Supprimez la préférence de consentement dans les réglages de votre navigateur pour revoir le bandeau.</p>
+    </div>
+  </section>
+</PageLayout>
