@@ -16,7 +16,12 @@ const euros = new Intl.NumberFormat('fr-FR', {
   <div class="container-shell">
     <SectionHeading eyebrow="Tarifs" title="Ce qui est compris, et ce qui ne l’est pas." lead={tarifs.intro} />
 
-    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {/*
+      Four columns only from xl. Below 1280px a quarter-width card leaves ~172px
+      of usable text, which is narrower than the CTA label — the button wrapped
+      and the row of cards stopped lining up.
+    */}
+    <ul class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {
         tarifs.formules.map((formule) => (
           <li

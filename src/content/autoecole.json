@@ -1,23 +1,21 @@
 {
   "_demo": "CONTENU DE DÉMONSTRATION. Auto-école fictive. Tout ce fichier est à remplacer pour un vrai client. Les valeurs marquées \"aConfirmer\" ne sont volontairement PAS inventées : elles engagent juridiquement.",
-
   "aConfirmer": {
     "tauxReussite": "[TAUX DE RÉUSSITE — à renseigner depuis les données officielles publiées par le ministère de l'Intérieur sur data.gouv.fr]",
     "agrement": "[N° D'AGRÉMENT PRÉFECTORAL]",
     "qualiopi": "[CERTIFICATION QUALIOPI — à confirmer avant toute mention du financement CPF]"
   },
-
   "hero": {
     "eyebrow": "Auto-école à Angers",
     "title": "Ton permis à Angers, avec le même moniteur du début à la fin.",
     "lead": "Permis B manuelle ou automatique, conduite accompagnée et code. Cinq points de rendez-vous sur l'agglomération, des tarifs affichés en clair, et un livret de progression que tu peux relire après chaque leçon.",
     "media": {
-      "ratio": "4 / 5",
-      "alt": "Une élève au volant pendant une leçon, son moniteur assis à droite, en conduite urbaine à Angers.",
-      "brief": "Photo réelle, prise depuis la banquette arrière. Élève au volant au premier plan, moniteur de profil à droite. Lumière naturelle de fin de journée, pas de flash. On doit voir deux personnes qui travaillent ensemble, pas une voiture."
+      "ratio": "3 / 2",
+      "alt": "Vue depuis la banquette arrière : une élève au volant reçoit les clés des mains de son moniteur, assis à droite.",
+      "brief": "Photo réelle, prise depuis la banquette arrière. Élève au volant au premier plan, moniteur de profil à droite. Lumière naturelle de fin de journée, pas de flash. On doit voir deux personnes qui travaillent ensemble, pas une voiture.",
+      "file": "hero-lecon-conduite.jpg"
     }
   },
-
   "trust": [
     {
       "title": "Cinq points de rendez-vous",
@@ -36,7 +34,6 @@
       "detail": "Le même interlocuteur de l'évaluation à l'examen."
     }
   ],
-
   "formations": [
     {
       "slug": "permis-b-manuelle",
@@ -89,7 +86,6 @@
       "featured": false
     }
   ],
-
   "etapes": [
     {
       "title": "Choisis ta formation",
@@ -108,7 +104,6 @@
       "description": "Après chaque leçon, ton moniteur remplit ton livret. Tu sais où tu en es sur les quatre compétences évaluées à l'examen."
     }
   ],
-
   "methode": {
     "intro": "Pas de formule magique : une évaluation honnête au départ, des objectifs annoncés à chaque heure, et un point écrit après chaque leçon.",
     "items": [
@@ -138,7 +133,6 @@
       }
     ]
   },
-
   "moniteurs": [
     {
       "prenom": "Karim",
@@ -147,8 +141,9 @@
       "bio": "Douze ans d'enseignement. Réputé patient avec les élèves que la conduite en ville angoisse.",
       "media": {
         "ratio": "1 / 1",
-        "alt": "Portrait de Karim, moniteur.",
-        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+        "alt": "Portrait de Karim, moniteur, en veste grise.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs.",
+        "file": "moniteur-karim.jpg"
       }
     },
     {
@@ -158,8 +153,9 @@
       "bio": "Accompagne surtout les adultes qui reprennent le volant après plusieurs années d'arrêt.",
       "media": {
         "ratio": "1 / 1",
-        "alt": "Portrait de Sophie, monitrice.",
-        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+        "alt": "Portrait de Sophie, monitrice, en veste beige.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs.",
+        "file": "monitrice-sophie.jpg"
       }
     },
     {
@@ -169,8 +165,9 @@
       "bio": "Anime les séances de code du samedi matin et les rendez-vous pédagogiques avec les parents.",
       "media": {
         "ratio": "1 / 1",
-        "alt": "Portrait de Mehdi, moniteur.",
-        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+        "alt": "Portrait de Mehdi, moniteur, en veste bordeaux.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs.",
+        "file": "moniteur-mehdi.jpg"
       }
     },
     {
@@ -180,21 +177,38 @@
       "bio": "S'occupe des examens blancs. C'est elle que tu auras en face le jour de la répétition générale.",
       "media": {
         "ratio": "1 / 1",
-        "alt": "Portrait de Claire, monitrice.",
-        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs."
+        "alt": "Portrait de Claire, monitrice, en veste à carreaux.",
+        "brief": "Portrait réel, extérieur, à côté du véhicule-école. Cadrage buste, regard caméra, sourire léger. Même lumière et même cadrage pour les quatre moniteurs.",
+        "file": "monitrice-claire.jpg"
       }
     }
   ],
-
   "lieux": [
-    { "name": "Angers — Agence, 18 rue Saint-Léonard", "note": "Inscriptions et séances de code" },
-    { "name": "Angers — Gare Saint-Laud", "note": "Départ pratique" },
-    { "name": "Angers — Lac de Maine", "note": "Départ pratique" },
-    { "name": "Avrillé — Centre commercial Atoll", "note": "Départ pratique" },
-    { "name": "Trélazé — Place Olivier Thuau", "note": "Départ pratique" },
-    { "name": "Les Ponts-de-Cé — Mairie", "note": "Départ pratique" }
+    {
+      "name": "Angers — Agence, 18 rue Saint-Léonard",
+      "note": "Inscriptions et séances de code"
+    },
+    {
+      "name": "Angers — Gare Saint-Laud",
+      "note": "Départ pratique"
+    },
+    {
+      "name": "Angers — Lac de Maine",
+      "note": "Départ pratique"
+    },
+    {
+      "name": "Avrillé — Centre commercial Atoll",
+      "note": "Départ pratique"
+    },
+    {
+      "name": "Trélazé — Place Olivier Thuau",
+      "note": "Départ pratique"
+    },
+    {
+      "name": "Les Ponts-de-Cé — Mairie",
+      "note": "Départ pratique"
+    }
   ],
-
   "tarifs": {
     "intro": "Les prix ci-dessous sont ceux que tu paies. Les frais de dossier et la présentation à l'examen sont compris dans chaque formule.",
     "formules": [
@@ -209,7 +223,9 @@
           "Un examen blanc par semaine",
           "Frais de dossier et présentation à l'examen du code"
         ],
-        "excludes": ["Heures de conduite"],
+        "excludes": [
+          "Heures de conduite"
+        ],
         "featured": false
       },
       {
@@ -225,7 +241,9 @@
           "Frais de dossier et présentation aux deux examens",
           "Accompagnement le jour de l'examen"
         ],
-        "excludes": ["Heures au-delà des 20 h, facturées à l'unité"],
+        "excludes": [
+          "Heures au-delà des 20 h, facturées à l'unité"
+        ],
         "featured": true
       },
       {
@@ -241,7 +259,9 @@
           "Frais de dossier et présentation aux deux examens",
           "Accompagnement le jour de l'examen"
         ],
-        "excludes": ["Passerelle vers la boîte manuelle (7 h), facturée à part"],
+        "excludes": [
+          "Passerelle vers la boîte manuelle (7 h), facturée à part"
+        ],
         "featured": false
       },
       {
@@ -255,15 +275,29 @@
           "Deux rendez-vous pédagogiques avec l'accompagnateur",
           "Frais de dossier et présentation aux deux examens"
         ],
-        "excludes": ["Assurance du véhicule de l'accompagnateur"],
+        "excludes": [
+          "Assurance du véhicule de l'accompagnateur"
+        ],
         "featured": false
       }
     ],
     "options": [
-      { "label": "Heure de conduite supplémentaire", "price": 52 },
-      { "label": "Conduite supervisée (2 h de rendez-vous préalable)", "price": 380 },
-      { "label": "Passerelle automatique → manuelle (7 h)", "price": 390 },
-      { "label": "Nouvelle présentation à l'examen pratique", "price": 90 }
+      {
+        "label": "Heure de conduite supplémentaire",
+        "price": 52
+      },
+      {
+        "label": "Conduite supervisée (2 h de rendez-vous préalable)",
+        "price": 380
+      },
+      {
+        "label": "Passerelle automatique → manuelle (7 h)",
+        "price": 390
+      },
+      {
+        "label": "Nouvelle présentation à l'examen pratique",
+        "price": 90
+      }
     ],
     "conditions": [
       "Prix TTC, valables 12 mois à compter de l'inscription.",
@@ -271,7 +305,6 @@
       "Toute leçon annulée moins de 48 h à l'avance est due, sauf justificatif."
     ]
   },
-
   "avis": {
     "note": "Avis de démonstration. À remplacer par des avis réels et autorisés avant toute mise en ligne commerciale.",
     "items": [
@@ -301,7 +334,6 @@
       }
     ]
   },
-
   "faq": [
     {
       "question": "Combien coûte le permis chez vous ?",
@@ -344,14 +376,26 @@
       "answer": "Un rendez-vous à l'agence avec une pièce d'identité, un justificatif de domicile de moins de 3 mois, une photo agréée et l'ASSR2 si tu as moins de 21 ans. On crée ton dossier ANTS sur place. L'évaluation de départ peut se faire dans la foulée."
     }
   ],
-
   "horaires": [
     {
       "jours": "Lundi – vendredi",
       "heures": "9 h – 12 h et 14 h – 19 h",
-      "schemaOrg": ["Mo-Fr 09:00-12:00", "Mo-Fr 14:00-19:00"]
+      "schemaOrg": [
+        "Mo-Fr 09:00-12:00",
+        "Mo-Fr 14:00-19:00"
+      ]
     },
-    { "jours": "Samedi", "heures": "9 h – 13 h", "schemaOrg": ["Sa 09:00-13:00"] },
-    { "jours": "Dimanche", "heures": "Fermé", "schemaOrg": [] }
+    {
+      "jours": "Samedi",
+      "heures": "9 h – 13 h",
+      "schemaOrg": [
+        "Sa 09:00-13:00"
+      ]
+    },
+    {
+      "jours": "Dimanche",
+      "heures": "Fermé",
+      "schemaOrg": []
+    }
   ]
 }

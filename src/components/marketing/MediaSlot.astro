@@ -1,60 +1,95 @@
 ---
+import { Image } from 'astro:assets';
+
 import type { MediaSlotData } from '@/content/schemas';
+import { resolvePhoto } from '@/lib/media';
 
 /**
- * A photo that does not exist yet.
+ * A photo, or the space one will occupy.
  *
- * The references this page is built on are image-led, and collapsing them into a
- * text-only layout would lose the thing that makes them work. So the slot keeps
- * its exact space in the composition, states its aspect ratio, and carries the
- * art direction for whoever shoots it.
+ * When the content names a file, it is rendered through `astro:assets` —
+ * resized, re-encoded and given explicit width/height so nothing shifts while
+ * it loads. Invariant I3 forbids a raw image element anywhere in src/, and this
+ * is the only place in the marketing components that renders one.
  *
- * What it deliberately does NOT do: fake a photograph with gradients or shapes,
- * or pass a generated portrait off as a real instructor.
- *
- * Replacing it is one import and one <Image />:
- *
- *   import { Image } from 'astro:assets';
- *   import photo from '@/assets/lecon-angers.jpg';
- *   <Image src={photo} alt={media.alt} widths={[480, 960]} loading="lazy" />
- *
- * `astro:assets` is mandatory here: invariant I3 scans the source text and fails
- * the suite on any raw image element in src/ — including one written inside a
- * comment, which is why this sentence describes it instead of showing it.
+ * When no file is named, the slot keeps its exact place in the composition and
+ * carries the art direction for whoever shoots it. It never fakes a photograph
+ * with gradients or shapes, and never passes a generated portrait off as a real
+ * instructor.
  */
 interface Props {
   media: MediaSlotData;
-  /** Art direction is shown on screen for the hero, hidden for repeated portraits. */
+  /** Art direction is shown on screen only while the slot is still empty. */
   showBrief?: boolean;
+  /** The hero is above the fold; everything else waits. */
+  loading?: 'eager' | 'lazy';
+  /** Rendered width in CSS pixels at the largest breakpoint, for sizing. */
+  width?: number;
   class?: string;
 }
 
-const { media, showBrief = false, class: className = '' } = Astro.props;
+const {
+  media,
+  showBrief = false,
+  loading = 'lazy',
+  width = 640,
+  class: className = '',
+} = Astro.props;
+
+const photo = resolvePhoto(media.file);
 ---
 
-<figure
-  class:list={[
-    'relative overflow-hidden rounded-(--radius-base) border border-dashed border-(--color-border) bg-white',
-    className,
-  ]}
-  style={`aspect-ratio: ${media.ratio};`}
->
-  <div class="absolute inset-0 flex flex-col justify-between gap-4 p-5">
-    <span
-      class="self-start rounded-full bg-ink px-3 py-1 text-xs font-medium tracking-wide text-white uppercase"
-      >Emplacement photo</span
+{
+  photo ? (
+    <figure
+      class:list={[
+        'overflow-hidden rounded-(--radius-base) border border-(--color-border) bg-white',
+        className,
+      ]}
+      style={`aspect-ratio: ${media.ratio};`}
     >
+      {/*
+        `width` is not decoration here. Without it, Astro keeps the untouched
+        source as the `src` fallback — a 4667x7000 portrait shipped as a 2.8 MB
+        file that lands in dist/ and serves any client that ignores srcset.
+        Capping the base at 2x the rendered size brought the four portraits from
+        8 MB to under 100 kB combined.
+      */}
+      <Image
+        src={photo}
+        alt={media.alt}
+        width={width * 2}
+        widths={[width, width * 2]}
+        sizes={`(max-width: 640px) 100vw, ${width}px`}
+        loading={loading}
+        decoding={loading === 'eager' ? 'sync' : 'async'}
+        style={`object-position: ${media.focal};`}
+        class="size-full object-cover"
+      />
+    </figure>
+  ) : (
+    <figure
+      class:list={[
+        'relative overflow-hidden rounded-(--radius-base) border border-dashed border-(--color-border) bg-white',
+        className,
+      ]}
+      style={`aspect-ratio: ${media.ratio};`}
+    >
+      <div class="absolute inset-0 flex flex-col justify-between gap-4 p-5">
+        <span class="self-start rounded-full bg-ink px-3 py-1 text-xs font-medium tracking-wide text-white uppercase">
+          Emplacement photo
+        </span>
 
-    {
-      showBrief && (
-        <figcaption class="text-sm text-muted-foreground">
-          <p class="font-medium text-ink">Direction artistique</p>
-          <p class="mt-1">{media.brief}</p>
-          <p class="mt-3 text-xs">
-            Ratio {media.ratio} · alt : « {media.alt} »
-          </p>
-        </figcaption>
-      )
-    }
-  </div>
-</figure>
+        {showBrief && (
+          <figcaption class="text-sm text-muted-foreground">
+            <p class="font-medium text-ink">Direction artistique</p>
+            <p class="mt-1">{media.brief}</p>
+            <p class="mt-3 text-xs">
+              Ratio {media.ratio} · alt : « {media.alt} »
+            </p>
+          </figcaption>
+        )}
+      </div>
+    </figure>
+  )
+}

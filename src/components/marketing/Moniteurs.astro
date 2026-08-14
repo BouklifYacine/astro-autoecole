@@ -18,7 +18,7 @@ const { moniteurs, lieux } = autoecole;
       {
         moniteurs.map((moniteur) => (
           <li>
-            <MediaSlot media={moniteur.media} />
+            <MediaSlot media={moniteur.media} width={280} />
             <p class="mt-4 font-heading text-lg font-semibold text-ink">{moniteur.prenom}</p>
             <p class="text-sm text-brand">{moniteur.specialite}</p>
             <p class="mt-2 text-sm text-muted-foreground">{moniteur.bio}</p>

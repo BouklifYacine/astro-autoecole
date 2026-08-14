@@ -20,8 +20,8 @@ const proofs = [
 ---
 
 <section class="section-space bg-canvas">
-  <div class="container-shell grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-    <div class="lg:col-span-7">
+  <div class="container-shell grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-6">
       <p class="flex items-center gap-2 text-sm font-medium text-brand">
         <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" class="size-4 shrink-0">
           <path
@@ -45,7 +45,12 @@ const proofs = [
         <Cta href="#formations" label="Découvrir les formations" variant="secondary" />
       </div>
 
-      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+      {/*
+        A grid, not flex-wrap. Wrapping put the third and fourth proof at an x
+        position that had nothing to do with the first two, so the column of
+        green checks read as misaligned even though the rows were level.
+      */}
+      <ul class="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2">
         {
           proofs.map((proof) => (
             <li class="flex items-center gap-2 text-sm text-muted-foreground">
@@ -70,8 +75,11 @@ const proofs = [
       </ul>
     </div>
 
-    <div class="lg:col-span-5">
-      <MediaSlot media={hero.media} showBrief />
+    <div class="lg:col-span-6">
+      {/* Above the fold: eager, and never lazy — this is the LCP candidate.
+          560px rendered against a 990px source keeps it close to 2x; asking for
+          more would upscale. */}
+      <MediaSlot media={hero.media} showBrief loading="eager" width={560} />
     </div>
   </div>
 </section>

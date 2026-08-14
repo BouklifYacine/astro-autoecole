@@ -61,3 +61,21 @@ export type CaptchaResult = 'verified' | 'rejected' | 'unavailable' | 'disabled'
 export interface CaptchaProvider {
   verify(token: string, ip: string | null): Promise<CaptchaResult>;
 }
+
+/**
+ * Editorial content, read ONCE AT BUILD TIME.
+ *
+ * Unlike the four interfaces above, this one never runs on a request: the site is
+ * `output: 'static'`, so a CMS change reaches visitors through a rebuild, not
+ * through a runtime fetch. That is the whole point — the client edits, a webhook
+ * triggers a deploy, and the served pages stay static HTML with no API call.
+ *
+ * Returns `unknown` on purpose. Whatever the source, the payload is validated by
+ * the same Zod schema (src/content/schemas.ts), so the schema — not the provider —
+ * remains the contract. A CMS that drifts from it fails the build with the exact
+ * field path instead of rendering a hole in the page.
+ */
+export interface ContentSource {
+  readonly name: string;
+  fetchAutoEcole(): Promise<unknown>;
+}

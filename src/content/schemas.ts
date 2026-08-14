@@ -28,6 +28,21 @@ const mediaSlotSchema = z.object({
   alt: z.string().min(10),
   /** Art direction for whoever shoots or sources the photo. */
   brief: z.string().min(20),
+  /**
+   * Filename inside src/assets/photos/. Absent = the slot renders as an empty,
+   * art-directed frame instead. Resolved by src/lib/media.ts, which throws at
+   * build time on a name that does not exist.
+   */
+  file: z.string().optional(),
+  /**
+   * CSS object-position, per photo.
+   *
+   * A single shared value cannot frame four portraits: the subject sits at a
+   * different height in each file, so one crop centres a face and pushes the
+   * next one to the bottom of the box. This is the focal point, not a style
+   * tweak, which is why it lives with the photo rather than in the component.
+   */
+  focal: z.string().default('50% 50%'),
 });
 
 export const autoEcoleSchema = z.object({

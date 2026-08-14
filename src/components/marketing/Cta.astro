@@ -19,8 +19,10 @@ interface Props {
 
 const { href, label, variant = 'primary', arrow = false, class: className = '' } = Astro.props;
 
+// whitespace-nowrap: a label that wraps turns a 48px button into a 50px one and
+// breaks the alignment of a row of cards. A CTA is one line or it is too long.
 const base =
-  'inline-flex min-h-12 items-center justify-center gap-2 rounded-(--radius-base) px-6 text-base font-medium no-underline transition-colors duration-150';
+  'inline-flex min-h-12 items-center justify-center gap-2 rounded-(--radius-base) px-5 text-base font-medium whitespace-nowrap no-underline transition-colors duration-150';
 
 const variants = {
   primary: 'bg-brand text-brand-contrast hover:bg-brand-hover',
