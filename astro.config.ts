@@ -2,13 +2,18 @@ import { defineConfig, envField } from 'astro/config';
 import { loadEnv } from 'vite';
 import cloudflare from '@astrojs/cloudflare';
 import react from '@astrojs/react';
+import sanity from '@sanity/astro';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 import { site } from './src/config/site.config';
 
 // astro:env is not usable inside this file — read the build-time origin directly.
-const { SITE_URL } = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
+const { SITE_URL, PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
+  process.env.NODE_ENV ?? 'production',
+  process.cwd(),
+  '',
+);
 const origin = SITE_URL || `https://${site.domain}`;
 
 export default defineConfig({
@@ -61,6 +66,22 @@ export default defineConfig({
 
   integrations: [
     react(),
+
+    // Sanity : fournit `sanity:client` pour lire le contenu au build.
+    // `placeholder` : sans .env, le projet doit quand même builder — aucune
+    // requête n'est envoyée tant que PUBLIC_SANITY_PROJECT_ID est vide.
+    //
+    // Pas de `studioBasePath` : le Studio embarqué sur /admin ne se charge pas
+    // sous le bundler d'Astro 7 (Vite 8/rolldown). Il tourne à part avec
+    // `bun run studio` — ce qui évite aussi d'embarquer le paquet `sanity`
+    // (~600 Mo) dans le build de chaque site client.
+    sanity({
+      projectId: PUBLIC_SANITY_PROJECT_ID || 'placeholder',
+      dataset: PUBLIC_SANITY_DATASET || 'production',
+      // false : on lit au build, on veut la version fraîche, pas le CDN.
+      useCdn: false,
+    }),
+
     sitemap({
       filter: (page) =>
         !site.seo.noindexPaths.some((path) => new URL(page).pathname === path),

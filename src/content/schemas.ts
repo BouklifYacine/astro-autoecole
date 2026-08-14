@@ -45,6 +45,19 @@ const mediaSlotSchema = z.object({
   focal: z.string().default('50% 50%'),
 });
 
+/**
+ * Un avis client. Exporté à part parce que deux sources doivent le respecter :
+ * le fichier JSON et Sanity. Le schéma est le contrat, pas le fournisseur.
+ */
+export const avisSchema = z.object({
+  prenom: z.string(),
+  formation: z.string(),
+  date: z.string(),
+  comment: z.string(),
+});
+
+export type Avis = z.infer<typeof avisSchema>;
+
 export const autoEcoleSchema = z.object({
   _demo: z.string(),
 
@@ -123,14 +136,7 @@ export const autoEcoleSchema = z.object({
 
   avis: z.object({
     note: z.string(),
-    items: z.array(
-      z.object({
-        prenom: z.string(),
-        formation: z.string(),
-        date: z.string(),
-        comment: z.string(),
-      }),
-    ),
+    items: z.array(avisSchema),
   }),
 
   faq: z.array(z.object({ question: z.string(), answer: z.string() })).min(4),

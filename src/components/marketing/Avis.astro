@@ -1,8 +1,13 @@
 ---
 import { autoecole } from '@/lib/autoecole';
+import { getAvisFromSanity } from '@/lib/adapters/cms/sanity';
 import SectionHeading from './SectionHeading.astro';
 
 const { avis, aConfirmer } = autoecole;
+
+// Sanity s'il est branché, sinon le fichier JSON. C'est tout le basculement.
+const fromSanity = await getAvisFromSanity();
+const items = fromSanity ?? avis.items;
 ---
 
 <section id="avis" class="section-space bg-canvas scroll-mt-20">
@@ -20,7 +25,7 @@ const { avis, aConfirmer } = autoecole;
     -->
     <ul class="grid gap-4 sm:grid-cols-2">
       {
-        avis.items.map((item) => (
+        items.map((item) => (
           <li class="surface-card p-6">
             <figure class="flex h-full flex-col">
               <blockquote class="text-[0.95rem] text-ink">
