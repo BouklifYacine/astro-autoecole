@@ -182,6 +182,123 @@ une page à trou en production.
 
 ---
 
+## 6 bis. Ce que tu peux modéliser — la liste des champs
+
+Il n'y a pas de « types de contenu » prédéfinis dans Sanity. Tu assembles des
+champs. Voici tout ce qui existe :
+
+**Champs simples** — `string`, `text` (multi-lignes), `number`, `boolean`,
+`date`, `datetime`, `url`, `email`, `slug` (l'URL, avec génération auto depuis
+le titre).
+
+**Champs riches** — `image`, `file`, `array` (liste de n'importe quoi),
+`object` (groupe de champs), `reference` (pointeur vers un autre document),
+`geopoint` (coordonnées GPS), `blockContent` (texte riche = Portable Text).
+
+**Ce que tu ajoutes par-dessus :**
+
+| Besoin | Comment |
+|---|---|
+| Liste déroulante | `options: { list: [...] }` |
+| Boutons radio | `options: { layout: 'radio' }` |
+| Champ conditionnel | `hidden: ({ parent }) => parent?.type !== 'x'` |
+| Validation | `validation: (rule) => rule.required().min(40)` |
+| Avertissement non bloquant | `.warning('Trop long pour le SEO')` |
+| Unicité vérifiée en base | `.custom(async (v, ctx) => ...)` |
+| Icône dans le menu | `icon: DocumentTextIcon` |
+
+**La règle de modélisation qui compte** (source : bonnes pratiques Sanity) :
+> Modélise **ce que les choses sont**, pas **à quoi elles ressemblent**.
+
+`titreGrosRouge` ❌ · `accroche` ✅
+`blocTroisColonnes` ❌ · `formations` ✅
+
+Le test : « si je refais le design dans deux ans, ce nom a-t-il encore du
+sens ? »
+
+---
+
+## 6 ter. Les images — le point fort
+
+C'est là que Sanity écrase un dossier de fichiers.
+
+### Le hotspot
+
+Le client dépose une photo et **dessine un cercle sur ce qui compte** (un
+visage, un véhicule). Ensuite, quel que soit le format demandé — carré pour une
+vignette, 16/9 pour une bannière, 3/4 pour une carte — le recadrage garde
+toujours ce point au centre.
+
+```ts
+defineField({
+  name: 'photo',
+  type: 'image',
+  options: { hotspot: true },   // ← à ne JAMAIS oublier
+  fields: [
+    defineField({ name: 'alt', type: 'string',
+      validation: (r) => r.required().warning('Important pour le SEO') }),
+  ],
+})
+```
+
+> **C'est exactement le problème qu'on a réglé à la main ce matin.** Les quatre
+> portraits de moniteurs avaient le visage à une hauteur différente dans chaque
+> fichier ; j'ai dû les recadrer avec `sharp` en calculant les coordonnées. Avec
+> le hotspot, le client le fait lui-même en deux secondes, et ça marche pour
+> tous les formats à venir.
+
+### Les transformations par URL
+
+Une fois la photo dans Sanity, tu demandes n'importe quelle variante en
+changeant l'URL. Pas de retraitement, pas de fichier à régénérer :
+
+```ts
+urlFor(photo).width(800).height(600).fit('crop').url()
+```
+
+`fit('crop')` respecte automatiquement le hotspot. Le CDN sert du WebP ou de
+l'AVIF selon le navigateur, sans que tu le demandes.
+
+### Le flou de chargement (LQIP)
+
+Sanity calcule une micro-version floue de chaque image, encodée en base64.
+Elle s'affiche pendant le chargement, ce qui évite le trou blanc.
+
+⚠️ **Elle n'est pas renvoyée par défaut**, il faut la demander en GROQ :
+
+```groq
+photo {
+  asset->{ url, metadata { lqip, dimensions { width, height } } },
+  alt, hotspot, crop
+}
+```
+
+---
+
+## 6 quater. Les trois niveaux de liberté du client
+
+| Niveau | Ce que le client peut faire | Ton coût | Risque |
+|---|---|---|---|
+| **1. Champs** | changer les textes, prix, photos | faible | aucun |
+| **2. Collections** | créer une formation → une page apparaît | +30 lignes | faible |
+| **3. Page builder** | composer ses pages en empilant des blocs | ×3–4 | il casse le design |
+
+**Niveau 2**, concrètement : tu ajoutes un champ `slug` au type, tu crées
+`src/pages/formations/[slug].astro`, et `getStaticPaths()` liste les documents
+Sanity. Le client publie « Permis moto » → `/formations/permis-moto/` existe au
+prochain build.
+
+**Niveau 3** : le document contient un `array` de blocs, et chaque bloc est un
+`object` avec ses champs. Tu écris un composant Astro par bloc. C'est ce que
+fait un vrai CMS moderne — et c'est ce qui coûte cher.
+
+⚠️ Sur un site vitrine, le niveau 3 est presque toujours du gaspillage. Le
+client change ses tarifs deux fois par an ; il ne réinvente pas sa page
+d'accueil. Tu construirais un éditeur de pages pour quelqu'un qui voulait
+modifier « 1 190 € ».
+
+---
+
 ## 7. Ce que Sanity sait faire (et qu'on n'utilise pas encore)
 
 | Fonctionnalité | Ce que ça t'apporte | Doc |
@@ -203,9 +320,11 @@ Le plus utile pour ce projet, dans l'ordre : **webhook de rebuild**, puis
 
 - **Le contenu sort de ton dépôt.** Git ne le versionne plus. Prévois un export
   (`sanity dataset export`) dans ta checklist de livraison client.
-- **Le tier gratuit** : 3 utilisateurs, ~100 k requêtes API/mois. En lecture au
-  build tu en fais quelques-unes par déploiement — c'est large. Mais vérifie
-  avant de promettre 10 comptes éditeurs à un client.
+- **Le plan gratuit est large** (voir §10). La vraie limite n'est pas le volume,
+  ce sont les **rôles** : seulement Administrateur et Lecteur. Pas de rôle
+  « Éditeur » — donc un client à qui tu donnes accès peut aussi supprimer un
+  type de contenu. Et les datasets sont **publics** : n'y mets jamais de donnée
+  personnelle.
 - **Le client ne voit pas son changement tout de suite.** Il publie, le rebuild
   prend ~1 minute. Dis-le lui, sinon il republie cinq fois.
 - **Le schéma est écrit deux fois** : en Zod (`src/content/schemas.ts`) et en
@@ -214,7 +333,59 @@ Le plus utile pour ce projet, dans l'ordre : **webhook de rebuild**, puis
 
 ---
 
-## 9. Où lire la suite
+## 10. Le plan gratuit, en chiffres
+
+| | Gratuit | Ce que ça veut dire pour un site vitrine |
+|---|---|---|
+| Utilisateurs | **20** | largement assez |
+| Documents | **10 000** | un site vitrine en utilise ~50 |
+| Requêtes API | **250 k/mois** | on en fait ~10 par build |
+| Requêtes CDN | 1 M/mois | non utilisées (lecture au build) |
+| Bande passante | 100 Go/mois | |
+| Stockage fichiers | 100 Go | des centaines de photos |
+| Datasets | **2, publics uniquement** | ⚠️ pas de donnée personnelle dedans |
+| Rôles | **2** (Admin, Lecteur) | ⚠️ pas de rôle « Éditeur » |
+| Webhooks | 2 | assez pour le rebuild |
+
+**Le volume ne sera jamais le problème.** Les deux vraies contraintes sont les
+rôles (un client admin peut tout casser) et le dataset public.
+
+Le plan payant (Growth) est à 15 $/utilisateur/mois : il débloque les datasets
+privés, les rôles fins (Éditeur, Contributeur) et les commentaires. Tu n'en as
+pas besoin pour une vitrine.
+
+### Ce qui n'est PAS limité sur le plan gratuit
+
+Beaucoup de gens croient que le gratuit est bridé sur les fonctionnalités. Non —
+il est bridé sur le **volume** et les **rôles**. Tout ceci fonctionne :
+
+- schémas illimités, champs illimités, imbrication illimitée ;
+- hotspot, recadrage, transformations d'images, LQIP, CDN ;
+- Portable Text (texte riche) ;
+- références entre documents, tableaux, objets, champs conditionnels ;
+- toute la validation, y compris asynchrone ;
+- brouillons et publication ;
+- Structure personnalisée du Studio, singletons, icônes ;
+- GROQ complet, requêtes temps réel ;
+- Studio hébergé sur `*.sanity.studio` ;
+- TypeGen, CLI, import/export de dataset ;
+- Visual Editing.
+
+### Les vraies limites, dans l'ordre où elles vont te gêner
+
+1. **Deux rôles seulement.** Admin ou Lecteur. Ton client sera admin — il peut
+   donc supprimer des documents. Pas de « il peut éditer mais pas supprimer ».
+2. **Datasets publics.** Le contenu est lisible par qui connaît le `projectId`.
+   Jamais de donnée personnelle : les leads passent par n8n, pas par Sanity.
+3. **2 webhooks.** Un pour le rebuild de production, un pour la préprod. Après,
+   il faut payer.
+4. **2 datasets.** En pratique `production` + `staging`. Suffisant.
+5. **Pas de commentaires ni de tâches** entre éditeurs. Sans importance à un
+   seul éditeur.
+
+---
+
+## 11. Où lire la suite
 
 | Sujet | Lien |
 |---|---|

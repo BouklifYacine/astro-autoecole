@@ -13,8 +13,10 @@ export default defineConfig({
   name: 'autoecole',
   title: 'Auto-école Trajectoire',
 
-  projectId: process.env.PUBLIC_SANITY_PROJECT_ID ?? '',
-  dataset: process.env.PUBLIC_SANITY_DATASET ?? 'production',
+  // Préfixe SANITY_STUDIO_ obligatoire : c'est le seul que Sanity injecte
+  // dans le bundle navigateur du Studio.
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? '',
+  dataset: process.env.SANITY_STUDIO_DATASET ?? 'production',
 
   plugins: [structureTool()],
   schema: { types: schemaTypes },

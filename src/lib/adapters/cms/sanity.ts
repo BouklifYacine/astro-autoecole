@@ -35,6 +35,10 @@ export async function getAvisFromSanity() {
 
   const data = await sanityClient.fetch(AVIS_QUERY);
 
+  // Dataset vide (juste après le branchement) : on retombe sur le JSON plutôt
+  // que d'afficher une section d'avis blanche.
+  if (!Array.isArray(data) || data.length === 0) return null;
+
   // Même schéma Zod que le fichier JSON : le CMS doit respecter le contrat,
   // pas l'inverse. Un champ manquant fait échouer le build, pas la page.
   const result = avisSchema.array().safeParse(data);
